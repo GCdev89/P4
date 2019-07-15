@@ -1,4 +1,4 @@
-<?php $title = "Blog MVC Listes des billets"; ?>
+<?php $title = "Blog Listes des billets"; ?>
 
 
 
@@ -15,7 +15,7 @@ foreach ($posts as $aPost) {
             <p class="pl-3 pb-2 bg-light" >' .  htmlspecialchars($aPost->content()) . '</p>
         </div>
         <div class="row">
-            <p class="col-4"><a href="http://localhost/projet_4/P4/index.php?action=post&amp;id=' . $aPost->id() .'">Commentaires</a></p>
+            <p class="col-4"><a href="index.php?action=post&amp;id=' . $aPost->id() .'">Commentaires</a></p>
         </div>
     </div>
 </div>';

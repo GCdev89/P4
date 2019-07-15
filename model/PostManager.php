@@ -25,24 +25,28 @@ class PostManager extends Manager
 
     public function getPost($postId)
     {
-        if (is_int($postId)) {
-            $q = $this->_db->prepare('SELECT id, title, author, content, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post_fr FROM billet WHERE id = ?');
-            $data = $q->execute(array($postId));
+        $q = $this->_db->prepare('SELECT id, title, author, content, DATE_FORMAT(datePost, \'%d/%m/%Y à %Hh%imin%ss\') AS datePost FROM billet WHERE id = :id');
+        $q->execute(array('id' => $postId));
+        $data = $q->fetch();
 
-            return new Post($data);
-        }
+        $post = new Post($data);
+        $q->closeCursor();
+
+        return $post;
     }
 
     public function getListPosts()
     {
         $posts = [];
 
-        $q = $this->_db->query("SELECT id, title, author, content, DATE_FORMAT(date_post, '%d/%m/%Y %Hh%imin') AS date_post_fr FROM billet");
+        $q = $this->_db->query("SELECT id, title, author, content, DATE_FORMAT(datePost, '%d/%m/%Y %Hh%imin') AS datePost FROM billet");
 
         while($data = $q->fetch())
         {
             $posts[] = new Post($data);
         }
+        $q->closeCursor();
+
         return $posts;
     }
 

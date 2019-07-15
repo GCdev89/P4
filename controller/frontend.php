@@ -1,6 +1,7 @@
 <?php
 require_once('model/Manager.php');
 require_once('model/PostManager.php');
+require_once('model/CommentManager.php');
 
 function listPosts()
 {
@@ -17,7 +18,7 @@ function post()
     $commentManager = new Gaetan\P4\Model\CommentManager();
 
     $post = $postManager->getPost($_GET['id']);
-    $comments = $commentManager->getComments($_GET['id']);
+    $comments = $commentManager->getListComments($_GET['id']);
 
     $navbar = 'view/frontoffice/navbar.php';
     require('view/frontoffice/postView.php');
