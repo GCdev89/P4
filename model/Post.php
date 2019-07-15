@@ -1,0 +1,122 @@
+<?php
+namespace Gaetan\P4\Model;
+
+
+class Post
+{
+    /**
+    *@var int $_id
+    *@var string $_type Define the type of tickets, either chapter, announcement or else
+    *@var string $_title
+    *@var string $_author
+    *@var string $_content
+    *@var int $_date
+    */
+
+    private $_id;
+    //private $_type;
+    private $_title;
+    private $_author;
+    private $_content;
+    private $_date_post;
+
+    public function __construct(array $data)
+    {
+        $this->hydrate($data);
+    }
+
+    public function hydrate(array $data)
+    {
+        foreach ($data as $key => $value)
+        {
+            $method = 'set'.ucfirst($key);
+
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+    }
+
+    // Getters
+    public function id()
+    {
+        return $this->_id;
+    }
+
+    public function type()
+    {
+        return $this->_type;
+    }
+
+    public function title()
+    {
+        return $this->_title;
+    }
+
+    public function author()
+    {
+        return $this->_author;
+    }
+
+    public function content()
+    {
+        return $this->_content;
+    }
+
+    public function datePost()
+    {
+        return $this->_date_post;
+    }
+
+    // Setters
+
+    public function setId($id)
+    {
+        $id =(int) $id;
+        if ($id > 0) {
+            $this->_id = $id;
+        }
+    }
+
+    /*public function setType($type)
+    {
+        if(is_string($type))
+        {
+            if ($nom = 'chapters' OR $type = 'announcement' OR $type = 'general') {
+                $this->_type = $type;
+            }
+        }
+    }*/
+
+    public function setTitle($title)
+    {
+        if(is_string($title))
+        {
+            $this->_title = $title;
+        }
+    }
+
+    public function setAuthor($author)
+    {
+        if(is_string($author))
+        {
+            $this->_author = $author;
+        }
+    }
+
+    public function setContent($content)
+    {
+        if(is_string($content))
+        {
+            $this->_content = $content;
+        }
+    }
+
+    public function setDatePost($datePost)
+    {
+        if(is_string($datePost))
+        {
+            $this->_date_post = $datePost;
+        }
+    }
+}
