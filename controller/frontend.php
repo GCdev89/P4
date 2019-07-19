@@ -24,11 +24,18 @@ function post()
     require('view/frontoffice/postView.php');
 }
 
-function addComment($postId, $titleC, $author, $comment)
+function addComment($postId, $title, $author, $content)
 {
-    $commentManager = new Gaetan\P4\CommentManager();
+    $data = [
+    'postId' => $postId,
+    'title' => $title,
+    'author' => $author,
+    'content' => $content
+    ];
+    $comment = new Gaetan\P4\Model\Comment($data);
+    $commentManager = new Gaetan\P4\Model\CommentManager();
 
-    $affectedLines = $commentManager->postComment($postId, $titleC, $author, $comment);
+    $affectedLines = $commentManager->add($comment);
 
     if ($affectedLines == false) {
         throw new Exception('Impossible d\'ajouter le commentaire.');

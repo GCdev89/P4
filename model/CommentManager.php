@@ -15,14 +15,15 @@ class CommentManager extends Manager
 
     public function add(Comment $comment)
     {
-        $q = $this->_db->prepare('INSERT INTO comment(postId, title, author, content, report date_post) VALUES(:type, :title, :author, :content, :report, NOW())');
-        $q->execute(array(
+        $q = $this->_db->prepare('INSERT INTO comment_blog(postId, title, author, content, dateComment) VALUES(:postId, :title, :author, :content, NOW())');
+        $affectedLines = $q->execute(array(
             'postId' => $comment->postId(),
             'title' => $comment->title(),
             'author' => $comment->author(),
             'content' => $comment->content(),
-            'report' => $comment->report()
+            //'report' => $comment->report()
         ));
+        return $affectedLines;
     }
 
     public function getComment($postId)

@@ -14,7 +14,7 @@ class Comment
     */
 
     private $_id;
-    private $_id_ticket;
+    private $_post_id;
     private $_title;
     private $_author;
     private $_content;
@@ -46,7 +46,7 @@ class Comment
 
     public function postId()
     {
-        return $this->_id_ticket;
+        return $this->_post_id;
     }
 
     public function title()
@@ -79,11 +79,11 @@ class Comment
         }
     }
 
-    public function setPostId($id_ticket)
+    public function setPostId($postId)
     {
-        $id_ticket = (int) $id_ticket;
-        if ($id_ticket > 0) {
-            $this->_id_ticket = $id;
+        $postId = (int) $postId;
+        if ($postId > 0) {
+            $this->_post_id = $postId;
         }
     }
 

@@ -31,6 +31,25 @@ foreach ($comments as $aComment) {
 }
 ?>
 </div>
+<div class="row mt-4">
+    <form action="index.php?action=addComment&amp;id=<?= htmlspecialchars($post->id()) ?>" method="post" class="mx-auto mb-5 p-2 bg-light">
+        <div class="form-group">
+            <label for="author">Auteur</label><br />
+            <input type="text" id="author" name="author" />
+        </div>
+        <div class="form-group" >
+            <label for="title">Titre du commentaire</label><br />
+            <input type="text" id="title" name="title" />
+        </div>
+        <div class="form-group">
+            <label for="content">Commentaire</label><br />
+            <textarea id="content" name="content"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
 
 <?php $content = ob_get_clean(); ?>
 <?php require($navbar); ?>
