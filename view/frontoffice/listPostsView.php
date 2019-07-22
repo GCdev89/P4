@@ -9,7 +9,7 @@ foreach ($posts as $aPost) {
     '<div class="row mt-3">
     <div class="col-12 my-auto">
         <div class="row bg-info text-light">
-            <p class="pl-3">' . htmlspecialchars($aPost->title()) . ' par : ' .  htmlspecialchars($aPost->author()) . ' le : ' .  htmlspecialchars($aPost->datePost()) .'</p>
+            <p class="pl-3">' . htmlspecialchars($aPost->title()) . ' par : ' .  htmlspecialchars($aPost->userId()) . ' le : ' .  htmlspecialchars($aPost->date()) .'</p>
         </div>
         <div class="row">
             <p class="pl-3 pb-2 bg-light" >' .  htmlspecialchars($aPost->content()) . '</p>

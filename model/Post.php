@@ -1,7 +1,6 @@
 <?php
 namespace Gaetan\P4\Model;
 
-
 class Post
 {
     /**
@@ -14,11 +13,11 @@ class Post
     */
 
     private $_id;
-    //private $_type;
+    private $_user_id;
+    private $_type;
     private $_title;
-    private $_author;
     private $_content;
-    private $_date_post;
+    private $_date;
 
     public function __construct(array $data)
     {
@@ -43,6 +42,11 @@ class Post
         return $this->_id;
     }
 
+    public function userId()
+    {
+        return $this->_user_id;
+    }
+
     public function type()
     {
         return $this->_type;
@@ -53,54 +57,51 @@ class Post
         return $this->_title;
     }
 
-    public function author()
-    {
-        return $this->_author;
-    }
+
 
     public function content()
     {
         return $this->_content;
     }
 
-    public function datePost()
+    public function date()
     {
-        return $this->_date_post;
+        return $this->_date;
     }
 
     // Setters
 
     public function setId($id)
     {
-        $id =(int) $id;
+        $id = (int) $id;
         if ($id > 0) {
             $this->_id = $id;
         }
     }
 
-    /*public function setType($type)
+    public function setUserId($userId)
+    {
+        if(is_string($userId))
+        {
+            $this->_user_id = $userId;
+        }
+    }
+
+    public function setType($type)
     {
         if(is_string($type))
         {
-            if ($nom = 'chapters' OR $type = 'announcement' OR $type = 'general') {
+            if ($type = 'chapters' OR $type = 'announcement' OR $type = 'general') {
                 $this->_type = $type;
             }
         }
-    }*/
+    }
 
     public function setTitle($title)
     {
         if(is_string($title))
         {
             $this->_title = $title;
-        }
-    }
-
-    public function setAuthor($author)
-    {
-        if(is_string($author))
-        {
-            $this->_author = $author;
         }
     }
 
@@ -112,11 +113,11 @@ class Post
         }
     }
 
-    public function setDatePost($datePost)
+    public function setDate($date)
     {
-        if(is_string($datePost))
+        if(is_string($date))
         {
-            $this->_date_post = $datePost;
+            $this->_date = $date;
         }
     }
 }

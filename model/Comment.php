@@ -5,7 +5,7 @@ class Comment
 {
     /**
     *@var int $_id
-    *@var int $_id_ticket
+    *@var int $_post_id
     *@var string $_title
     *@var string $_author
     *@var string $_content
@@ -14,12 +14,12 @@ class Comment
     */
 
     private $_id;
+    private $_user_id;
     private $_post_id;
     private $_title;
-    private $_author;
     private $_content;
     private $_report;
-    private $_date_comment;
+    private $_date;
 
     public function __construct(array $data)
     {
@@ -44,6 +44,11 @@ class Comment
         return $this->_id;
     }
 
+    public function userId()
+    {
+        return $this->_user_id;
+    }
+
     public function postId()
     {
         return $this->_post_id;
@@ -54,19 +59,14 @@ class Comment
         return $this->_title;
     }
 
-    public function author()
-    {
-        return $this->_author;
-    }
-
     public function content()
     {
         return $this->_content;
     }
 
-    public function dateComment()
+    public function date()
     {
-        return $this->_date_comment;
+        return $this->_date;
     }
 
     // Setters
@@ -76,6 +76,14 @@ class Comment
         $id = (int) $id;
         if ($id > 0) {
             $this->_id = $id;
+        }
+    }
+
+    public function setUserId($userId)
+    {
+        if(is_string($userId))
+        {
+            $this->_user_id = $userId;
         }
     }
 
@@ -95,13 +103,7 @@ class Comment
         }
     }
 
-    public function setAuthor($author)
-    {
-        if(is_string($author))
-        {
-            $this->_author = $author;
-        }
-    }
+
 
     public function setContent($content)
     {
@@ -114,16 +116,16 @@ class Comment
     public function setReport($report)
     {
         $report =(int) $report;
-        if ($report > 0) {
+        if ($report >= 0) {
             $this->_report = $report;
         }
     }
 
-    public function setDateComment($dateComment)
+    public function setDateComment($date)
     {
-        if(is_string($dateComment))
+        if(is_string($date))
         {
-            $this->_date_comment = $dateComment;
+            $this->_date = $date;
         }
     }
 

@@ -6,7 +6,7 @@
     <p><a href="index.php">Retour à la liste des billets</a></p>
     <div class="col-12 my-auto">
         <div class="row bg-info text-light">
-            <p class="pl-2"> <?= htmlspecialchars($post->title()) ?> par :  <?= htmlspecialchars($post->author()) ?> le : <?= htmlspecialchars($post->datePost()) ?> </p>
+            <p class="pl-2"> <?= htmlspecialchars($post->title()) ?> par :  <?= htmlspecialchars($post->userId()) ?> le : <?= htmlspecialchars($post->date()) ?> </p>
         </div>
         <div class="row">
             <p class="p-2 bg-light" ><?= htmlspecialchars($post->content()) ?></p>
@@ -22,7 +22,7 @@ foreach ($comments as $aComment) {
     echo
     '<div class="col-11 mx-auto my-auto">
         <div class="row bg-warning text-light">
-            <p class="pl-2">' . htmlspecialchars($aComment->title()) . ' par : ' . htmlspecialchars($aComment->author()) . ' le : ' . htmlspecialchars($aComment->dateComment()) .'</p>
+            <p class="pl-2">' . htmlspecialchars($aComment->title()) . ' par : ' . htmlspecialchars($aComment->userId()) . ' le : ' . htmlspecialchars($aComment->date()) .'</p>
         </div>
         <div class="row">
             <p class="p-2 col-12 bg-light" >' . htmlspecialchars($aComment->content()) .'</p>

@@ -15,12 +15,12 @@ class CommentManager extends Manager
 
     public function add(Comment $comment)
     {
-        $q = $this->_db->prepare('INSERT INTO comment_blog(postId, title, author, content, dateComment) VALUES(:postId, :title, :author, :content, NOW())');
+        $q = $this->_db->prepare('INSERT INTO comment(user_id, post_id, title, content, date) VALUES(?, ?, ?, ?, NOW())');
         $affectedLines = $q->execute(array(
-            'postId' => $comment->postId(),
-            'title' => $comment->title(),
-            'author' => $comment->author(),
-            'content' => $comment->content(),
+            $comment->userId(),
+            $comment->postId(),
+            $comment->title(),
+            $comment->content(),
             //'report' => $comment->report()
         ));
         return $affectedLines;
@@ -29,7 +29,7 @@ class CommentManager extends Manager
     public function getComment($postId)
     {
         if (is_int($postId)) {
-            $q = $this->_db->prepare('SELECT id, title, author, content, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post_fr FROM billet WHERE id = ?');
+            $q = $this->_db->prepare('SELECT id, user_id, title, author, content, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post_fr FROM billet WHERE id = ?');
             $data = $q->execute(array($postId));
             $comment = new Comment($data);
             $q->closeCursor();
