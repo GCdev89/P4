@@ -26,7 +26,11 @@ class PostManager extends Manager
 
     public function getPost($postId)
     {
-        $q = $this->_db->prepare('SELECT id, user_id, title, content, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM post WHERE id = :id');
+        $q = $this->_db->prepare('SELECT u.pseudo userPseudo, p.id id, p.user_id userId, p.title title, p.content content, DATE_FORMAT(p.date, \'%d/%m/%Y à %Hh%imin%ss\') AS date
+        FROM user u
+        INNER JOIN post p
+        ON p.user_id = u.id
+        WHERE p.id = :id');
         $q->execute(array('id' => $postId));
         $data = $q->fetch();
 
@@ -40,7 +44,10 @@ class PostManager extends Manager
     {
         $posts = [];
 
-        $q = $this->_db->query("SELECT id, user_id, type, title, content, DATE_FORMAT(date, '%d/%m/%Y %Hh%imin') AS date FROM post");
+        $q = $this->_db->query('SELECT u.pseudo userPseudo, p.id id, p.user_id userId, p.type type, p.title title, p.content content, DATE_FORMAT(p.date, \'%d/%m/%Y %Hh%imin\') AS date
+        FROM user u
+        INNER JOIN post p
+        ON p.user_id = u.id');
 
         while($data = $q->fetch())
         {

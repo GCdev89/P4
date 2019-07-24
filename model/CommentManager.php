@@ -20,8 +20,7 @@ class CommentManager extends Manager
             $comment->userId(),
             $comment->postId(),
             $comment->title(),
-            $comment->content(),
-            //'report' => $comment->report()
+            $comment->content()
         ));
         return $affectedLines;
     }

@@ -4,7 +4,7 @@ namespace Gaetan\P4\Model;
 require_once('model/Manager.php');
 require('model/User.php');
 
-class PostManager extends Manager
+class UserManager extends Manager
 {
     private $_db;
 
@@ -15,13 +15,14 @@ class PostManager extends Manager
 
     public function add(User $user)
     {
-        $q = $this->_db->prepare('INSERT INTO post(role, name, forname, mail, date) VALUES(:role, :name, :forname, :mail, NOW())');
-        $q->execute(array(
+        $q = $this->_db->prepare('INSERT INTO user(role, pseudo, password, mail, date) VALUES(:role, :pseudo, :password, :mail, NOW())');
+        $affectedLines= $q->execute(array(
             'role' => $user->role(),
-            'name' => $user->name(),
-            'forname' => $user->forname(),
-            'mail' => $user->mail()
+            'pseudo' => $user->pseudo(),
+            'mail' => $user->mail(),
+            'password' => $user->password()
         ));
+        return $affectedLines;
     }
 
     public function getUser($userId)
@@ -51,6 +52,12 @@ class PostManager extends Manager
         return $users;
     }
 
+    public function exists($data)
+    {
+        $q = $this->_db->prepare('SELECT COUNT(*) FROM user WHERE pseudo = :pseudo');
+        $q->execute(array('pseudo' => $data));
+        return (bool) $q->fetchColumn();
+    }
 
 
     public function setDb()

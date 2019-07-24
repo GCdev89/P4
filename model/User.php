@@ -4,7 +4,9 @@ namespace Gaetan\P4\Model;
 class User
 {
     private $_id;
+    private $_role;
     private $_pseudo;
+    private $_password;
     private $_mail;
     private $_date_creation;
 
@@ -36,14 +38,14 @@ class User
         return $this->_role;
     }
 
-    public function name()
+    public function pseudo()
     {
-        return $this->_name;
+        return $this->_pseudo;
     }
 
-    public function forname()
+    public function password()
     {
-        return $this->_forname;
+        return $this->_password;
     }
 
     public function mail()
@@ -66,17 +68,33 @@ class User
         }
     }
 
-    public function setType($role)
+    public function setRole($role)
     {
         if(is_string($role))
         {
-            if ($role = 'admin' OR $role = 'common_user') {
-                $this->_type = $role;
+            if ($role == 'admin' OR $role == 'common_user') {
+                $this->_role = $role;
             }
         }
     }
 
-    public function setTitle($name)
+    public function setPseudo($pseudo)
+    {
+        if(is_string($pseudo))
+        {
+            $this->_pseudo = $pseudo;
+        }
+    }
+
+    public function setPassword($password)
+    {
+        if(is_string($password))
+        {
+            $this->_password = $password;
+        }
+    }
+
+    public function setName($name)
     {
         if(is_string($name))
         {

@@ -24,11 +24,11 @@
                 </ul>
             </div>
             <div class="col-md-8 mx-auto">
-                <h1 class="page-header ml-4 my-4">Version MVC du blog</h1>
-
-                <div class="mx-auto">
-                    <?= $content ?>
+                <h1 class="page-header ml-4 my-4"><?= $h1 ?></h1>
+                <div class="row">
+                        <?= $content ?>
                 </div>
+
             </div>
 
 

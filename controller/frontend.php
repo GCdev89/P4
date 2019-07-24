@@ -2,6 +2,7 @@
 require_once('model/Manager.php');
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
+require_once('model/UserManager.php');
 
 function listPosts()
 {
@@ -43,4 +44,40 @@ function addComment($postId, $title, $author, $content)
     else {
         header('Location: index.php?action=post&id=' . $postId);
     }
+}
+
+function registration()
+{
+    $navbar = 'view/frontoffice/navbar.php';
+    require('view/frontoffice/registrationView.php');
+}
+
+function addUser($pseudo, $password, $mail)
+{
+    $chopPass = password_hash($password, PASSWORD_DEFAULT);
+    $role = 'common_user';
+    $data = [
+        'role' => $role,
+        'pseudo' => $pseudo,
+        'password' => $chopPass,
+        'mail' => $mail
+    ];
+    $userManager = new Gaetan\P4\Model\UserManager();
+
+    if (!$userManager->exists($_POST['pseudo'])) {
+        $user = new Gaetan\P4\Model\User($data);
+        $affectedLines = $userManager->add($user);
+        if ($affectedLines == false) {
+            throw new Exception('Impossible d\'enregistrer l\'utilisateur');
+        }
+        else {
+            header('Location: index.php');
+        }
+    }
+    else {
+        throw new Exception('Ce pseudo existe déjà, merci d\'en choisir un autre ');
+    }
+    /*
+    Use exists with $_POST['pseudo'], if true send data to UserManager->add, else throw exception
+    */
 }

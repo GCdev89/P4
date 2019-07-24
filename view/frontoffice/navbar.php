@@ -9,6 +9,7 @@
 <form class="form-inline" action="traitement.php">
     <input class="form-control mr-2" type="text" name="pseudo" placeholder="Pseudo"/>
     <input class="form-control mr-2" type="password" name="password" placeholder="Password" />
-    <button class="btn btn-outline-primary" type="submit">Connexion</button>
+    <button class="btn btn-outline-success" type="submit">Connexion</button>
 </form>
+<a href="index.php?action=registration&amp;sent=no" class="ml-3 btn btn-outline-warning">Inscription</a>
 <?php $nav = ob_get_clean(); ?>

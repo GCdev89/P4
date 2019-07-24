@@ -14,6 +14,9 @@ class Post
 
     private $_id;
     private $_user_id;
+    private $_user_pseudo;
+    private $_user_name;
+    private $_user_forname;
     private $_type;
     private $_title;
     private $_content;
@@ -47,6 +50,21 @@ class Post
         return $this->_user_id;
     }
 
+    public function userPseudo()
+    {
+        return $this->_user_pseudo;
+    }
+
+    public function userName()
+    {
+        return $this->_user_name;
+    }
+
+    public function userForname()
+    {
+        return $this->_user_forname;
+    }
+
     public function type()
     {
         return $this->_type;
@@ -56,8 +74,6 @@ class Post
     {
         return $this->_title;
     }
-
-
 
     public function content()
     {
@@ -81,9 +97,33 @@ class Post
 
     public function setUserId($userId)
     {
-        if(is_string($userId))
-        {
+        $userId = (int) $userId;
+        if ($userId > 0) {
             $this->_user_id = $userId;
+        }
+    }
+
+    public function setUserPseudo($userPseudo)
+    {
+        if(is_string($userPseudo))
+        {
+            $this->_user_pseudo = $userPseudo;
+        }
+    }
+
+    public function setUserName($userName)
+    {
+        if(is_string($userName))
+        {
+            $this->_user_name = $userName;
+        }
+    }
+
+    public function setUserForname($userForname)
+    {
+        if(is_string($userForname))
+        {
+            $this->_user_forname = $userForname;
         }
     }
 
