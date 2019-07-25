@@ -7,7 +7,6 @@ $h1 = 'Le blog'
 
 <?php ob_start(); ?>
 <div class="mx-auto px-auto">
-    
 <?php
 foreach ($posts as $aPost) {
     echo
@@ -28,5 +27,5 @@ foreach ($posts as $aPost) {
 ?>
 </div>
 <?php $content = ob_get_clean(); ?>
-<?php require($navbar); ?>
+<?php require('view/frontoffice/navbar.php'); ?>
 <?php require('template.php'); ?>

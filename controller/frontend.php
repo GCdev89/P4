@@ -9,29 +9,30 @@ function listPosts()
     $postManager = new Gaetan\P4\Model\PostManager();
     $posts = $postManager->getListPosts();
 
-    $navbar = 'view/frontoffice/navbar.php';
     require('view/frontoffice/listPostsView.php');
 }
 
-function post()
+function post($postId)
 {
     $postManager = new Gaetan\P4\Model\PostManager();
     $commentManager = new Gaetan\P4\Model\CommentManager();
 
-    $post = $postManager->getPost($_GET['id']);
-    $comments = $commentManager->getListComments($_GET['id']);
+    $post = $postManager->getPost($postId);
+    $comments = $commentManager->getListComments($postId);
 
-    $navbar = 'view/frontoffice/navbar.php';
     require('view/frontoffice/postView.php');
 }
 
-function addComment($postId, $title, $author, $content)
+function addComment($postId, $title, $userId, $content)
 {
+    $report = 0;
+
     $data = [
     'postId' => $postId,
     'title' => $title,
-    'author' => $author,
-    'content' => $content
+    'userId' => $userId,
+    'content' => $content,
+    'report' => $report
     ];
     $comment = new Gaetan\P4\Model\Comment($data);
     $commentManager = new Gaetan\P4\Model\CommentManager();
@@ -48,36 +49,9 @@ function addComment($postId, $title, $author, $content)
 
 function registration()
 {
-    $navbar = 'view/frontoffice/navbar.php';
     require('view/frontoffice/registrationView.php');
 }
-
-function addUser($pseudo, $password, $mail)
+function registered()
 {
-    $chopPass = password_hash($password, PASSWORD_DEFAULT);
-    $role = 'common_user';
-    $data = [
-        'role' => $role,
-        'pseudo' => $pseudo,
-        'password' => $chopPass,
-        'mail' => $mail
-    ];
-    $userManager = new Gaetan\P4\Model\UserManager();
 
-    if (!$userManager->exists($_POST['pseudo'])) {
-        $user = new Gaetan\P4\Model\User($data);
-        $affectedLines = $userManager->add($user);
-        if ($affectedLines == false) {
-            throw new Exception('Impossible d\'enregistrer l\'utilisateur');
-        }
-        else {
-            header('Location: index.php');
-        }
-    }
-    else {
-        throw new Exception('Ce pseudo existe déjà, merci d\'en choisir un autre ');
-    }
-    /*
-    Use exists with $_POST['pseudo'], if true send data to UserManager->add, else throw exception
-    */
 }

@@ -14,7 +14,6 @@
             <?= $nav ?>
         </nav>
         <div class="container-fluid">
-
             <div class="col-1 fixed-top mt-5 p-3 navbar-dark bg-dark">
                 <h4 class="text-light">Archives</h3>
                 <ul class="navbar-nav">
@@ -26,12 +25,9 @@
             <div class="col-md-8 mx-auto">
                 <h1 class="page-header ml-4 my-4"><?= $h1 ?></h1>
                 <div class="row">
-                        <?= $content ?>
+                    <?= $content ?>
                 </div>
-
             </div>
-
-
         </div>
 
     </body>

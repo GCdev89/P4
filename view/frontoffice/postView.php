@@ -25,7 +25,7 @@ $h1 = 'Commentaires'
         echo
         '<div class="col-11 mx-auto my-auto">
             <div class="row bg-warning text-light">
-                <p class="pl-2">' . htmlspecialchars($aComment->title()) . ' par : ' . htmlspecialchars($aComment->userId()) . ' le : ' . htmlspecialchars($aComment->date()) .'</p>
+                <p class="pl-2">' . htmlspecialchars($aComment->title()) . ' par : ' . htmlspecialchars($aComment->userPseudo()) . ' le : ' . htmlspecialchars($aComment->date()) .'</p>
             </div>
             <div class="row">
                 <p class="p-2 col-12 bg-light" >' . htmlspecialchars($aComment->content()) .'</p>
@@ -34,12 +34,12 @@ $h1 = 'Commentaires'
     }
     ?>
     </div>
-    <div class="row mt-4">
-        <form action="index.php?action=addComment&amp;id=<?= htmlspecialchars($post->id()) ?>" method="post" class="mx-auto mb-5 p-2 bg-light">
-            <div class="form-group">
-                <label for="author">Auteur</label><br />
-                <input type="text" id="author" name="author" />
-            </div>
+
+<?php if (isset($_SESSION['user_id']) && isset($_SESSION['pseudo']) && isset($_SESSION['role']))
+{
+    echo
+    '<div class="row mt-4">
+        <form action="index.php?action=addComment&amp;id=' . htmlspecialchars($post->id()) . '" method="post" class="mx-auto mb-5 p-2 bg-light">
             <div class="form-group" >
                 <label for="title">Titre du commentaire</label><br />
                 <input type="text" id="title" name="title" />
@@ -53,7 +53,11 @@ $h1 = 'Commentaires'
             </div>
         </form>
     </div>
-</div>
+</div>';
+    }
+
+
+?>
 <?php $content = ob_get_clean(); ?>
-<?php require($navbar); ?>
+<?php require('view/frontoffice/navbar.php'); ?>
 <?php require('template.php'); ?>

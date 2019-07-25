@@ -16,6 +16,7 @@ class Comment
     private $_id;
     private $_user_id;
     private $_post_id;
+    private $_user_pseudo;
     private $_title;
     private $_content;
     private $_report;
@@ -54,6 +55,11 @@ class Comment
         return $this->_post_id;
     }
 
+    public function userPseudo()
+    {
+        return $this->_user_pseudo;
+    }
+
     public function title()
     {
         return $this->_title;
@@ -62,6 +68,11 @@ class Comment
     public function content()
     {
         return $this->_content;
+    }
+
+    public function report()
+    {
+        return $this->_report;
     }
 
     public function date()
@@ -81,8 +92,8 @@ class Comment
 
     public function setUserId($userId)
     {
-        if(is_string($userId))
-        {
+        $userId = (int) $userId;
+        if ($userId > 0) {
             $this->_user_id = $userId;
         }
     }
@@ -95,6 +106,14 @@ class Comment
         }
     }
 
+    public function setUserPseudo($userPseudo)
+    {
+        if(is_string($userPseudo))
+        {
+            $this->_user_pseudo = $userPseudo;
+        }
+    }
+
     public function setTitle($title)
     {
         if(is_string($title))
@@ -102,8 +121,6 @@ class Comment
             $this->_title = $title;
         }
     }
-
-
 
     public function setContent($content)
     {
@@ -121,7 +138,7 @@ class Comment
         }
     }
 
-    public function setDateComment($date)
+    public function setDate($date)
     {
         if(is_string($date))
         {

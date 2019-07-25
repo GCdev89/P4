@@ -25,16 +25,30 @@ class UserManager extends Manager
         return $affectedLines;
     }
 
-    public function getUser($userId)
+    public function getUser($info)
     {
-        $q = $this->_db->prepare('SELECT id, role, name, forname, mail, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM user WHERE id = :id');
-        $q->execute(array('id' => $userId));
-        $data = $q->fetch();
+        if (is_int($info))
+        {
+            $q = $this->_db->prepare('SELECT id, role, name, forname, mail, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM user WHERE id = :id');
+            $q->execute(array('id' => $userId));
+            $data = $q->fetch();
 
-        $user = new User($data);
-        $q->closeCursor();
+            $user = new User($data);
+            $q->closeCursor();
 
-        return $user;
+            return $user;
+        }
+        else {
+            $q = $this->_db->prepare('SELECT id, role, pseudo, password, mail, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM user WHERE pseudo = :pseudo');
+            $q->execute(array('pseudo' => $info));
+            $data = $q->fetch();
+
+            $user = new User($data);
+            $q->closeCursor();
+
+            return $user;
+        }
+
     }
 
     public function getListUsers()

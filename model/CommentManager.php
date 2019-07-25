@@ -15,12 +15,13 @@ class CommentManager extends Manager
 
     public function add(Comment $comment)
     {
-        $q = $this->_db->prepare('INSERT INTO comment(user_id, post_id, title, content, date) VALUES(?, ?, ?, ?, NOW())');
+        $q = $this->_db->prepare('INSERT INTO comment(user_id, post_id, title, content, report, date) VALUES(:user_id, :post_id, :title, :content, :report, NOW())');
         $affectedLines = $q->execute(array(
-            $comment->userId(),
-            $comment->postId(),
-            $comment->title(),
-            $comment->content()
+            'user_id' => $comment->userId(),
+            'post_id' => $comment->postId(),
+            'title' => $comment->title(),
+            'content' => $comment->content(),
+            'report' => $comment->report()
         ));
         return $affectedLines;
     }
@@ -40,8 +41,13 @@ class CommentManager extends Manager
     {
         $comments = [];
 
-        $q = $this->_db->prepare("SELECT id, title, author, content, DATE_FORMAT(dateComment, '%d/%m/%Y %Hh%imin') AS dateComment FROM comment_blog WHERE postId = :postId ORDER BY dateComment DESC");
-        $q->execute(array('postId' => $postId));
+        $q = $this->_db->prepare('SELECT u.pseudo userPseudo, c.id id, c.user_id userId, c.post_id postId, c.title title, c.content content, DATE_FORMAT(c.date, \'%d/%m/%Y %Hh%imin\') AS date
+        FROM user u
+        INNER JOIN comment c
+        ON c.user_id = u.id
+        WHERE c.post_id = :post_id
+        ORDER BY date DESC');
+        $q->execute(array('post_id' => $postId));
         while($data = $q->fetch())
         {
             $comments[] = new Comment($data);

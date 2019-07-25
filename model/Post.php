@@ -55,16 +55,6 @@ class Post
         return $this->_user_pseudo;
     }
 
-    public function userName()
-    {
-        return $this->_user_name;
-    }
-
-    public function userForname()
-    {
-        return $this->_user_forname;
-    }
-
     public function type()
     {
         return $this->_type;
@@ -108,22 +98,6 @@ class Post
         if(is_string($userPseudo))
         {
             $this->_user_pseudo = $userPseudo;
-        }
-    }
-
-    public function setUserName($userName)
-    {
-        if(is_string($userName))
-        {
-            $this->_user_name = $userName;
-        }
-    }
-
-    public function setUserForname($userForname)
-    {
-        if(is_string($userForname))
-        {
-            $this->_user_forname = $userForname;
         }
     }
 
