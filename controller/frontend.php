@@ -23,35 +23,30 @@ function post($postId)
     require('view/frontoffice/postView.php');
 }
 
-function addComment($postId, $title, $userId, $content)
-{
-    $report = 0;
-
-    $data = [
-    'postId' => $postId,
-    'title' => $title,
-    'userId' => $userId,
-    'content' => $content,
-    'report' => $report
-    ];
-    $comment = new Gaetan\P4\Model\Comment($data);
-    $commentManager = new Gaetan\P4\Model\CommentManager();
-
-    $affectedLines = $commentManager->add($comment);
-
-    if ($affectedLines == false) {
-        throw new Exception('Impossible d\'ajouter le commentaire.');
-    }
-    else {
-        header('Location: index.php?action=post&id=' . $postId);
-    }
-}
-
 function registration()
 {
     require('view/frontoffice/registrationView.php');
 }
 function registered()
 {
+    require('view/frontoffice/registeredView.php');
 
+}
+
+function updateComment($commentId, $userId)
+{
+    $commentManager = new Gaetan\P4\Model\CommentManager();
+    if ($commentManager->exists($commentId))
+    {
+        $comment = $commentManager->getComment($commentId);
+        if ($comment->userId() == $userId) {
+            require('view/frontoffice/updateCommentView.php');
+        }
+        else {
+            throw new Exception('Identifiant incorrect.');
+        }
+    }
+    else {
+        throw new Exception('Identifiant incorrect.');
+    }
 }

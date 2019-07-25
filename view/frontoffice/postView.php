@@ -31,33 +31,45 @@ $h1 = 'Commentaires'
                 <p class="p-2 col-12 bg-light" >' . htmlspecialchars($aComment->content()) .'</p>
             </div>
         </div>';
+        if (isset($_SESSION['user_id']))
+        {
+            if ($_SESSION['user_id'] == $aComment->userId())
+            {
+                echo
+                '<p><a href="index.php?action=comment_edit&amp;id=' . $aComment->id() .'" class="btn btn-outline-primary">Modifier</a></p>';
+            }
+            else {
+                echo
+                '<p><a href="index.php?action=report" class="btn btn-outline-warning">Signaler</a></p>';
+            }
+        };
+
+
     }
     ?>
     </div>
 
-<?php if (isset($_SESSION['user_id']) && isset($_SESSION['pseudo']) && isset($_SESSION['role']))
-{
-    echo
-    '<div class="row mt-4">
-        <form action="index.php?action=addComment&amp;id=' . htmlspecialchars($post->id()) . '" method="post" class="mx-auto mb-5 p-2 bg-light">
-            <div class="form-group" >
-                <label for="title">Titre du commentaire</label><br />
-                <input type="text" id="title" name="title" />
-            </div>
-            <div class="form-group">
-                <label for="content">Commentaire</label><br />
-                <textarea id="content" name="content"></textarea>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>';
+    <?php if (isset($_SESSION['user_id']) && isset($_SESSION['pseudo']) && isset($_SESSION['role']))
+    {
+        echo
+        '<div class="row mt-4">
+            <form action="index.php?action=addComment&amp;id=' . htmlspecialchars($post->id()) . '" method="post" class="col-8 mx-auto mb-5 p-auto bg-light">
+                <div class="form-group" >
+                    <label for="title">Titre du commentaire</label><br />
+                    <input type="text" id="title" name="title" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="content">Commentaire</label><br />
+                    <textarea id="content" name="content" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>';
     }
-
-
-?>
+    ?>
+</div>
 <?php $content = ob_get_clean(); ?>
 <?php require('view/frontoffice/navbar.php'); ?>
 <?php require('template.php'); ?>

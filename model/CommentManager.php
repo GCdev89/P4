@@ -26,15 +26,17 @@ class CommentManager extends Manager
         return $affectedLines;
     }
 
-    public function getComment($postId)
+    public function getComment($commentId)
     {
-        if (is_int($postId)) {
-            $q = $this->_db->prepare('SELECT id, user_id, title, author, content, DATE_FORMAT(date_post, \'%d/%m/%Y à %Hh%imin%ss\') AS date_post_fr FROM billet WHERE id = ?');
-            $data = $q->execute(array($postId));
-            $comment = new Comment($data);
-            $q->closeCursor();
-            return $comment;
-        }
+
+        $q = $this->_db->prepare('SELECT id, user_id userId, post_id postId, title, content, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM comment WHERE id = :id');
+        $q->execute(array('id' => $commentId));
+        $data = $q->fetch();
+        $comment = new Comment($data);
+        $q->closeCursor();
+
+        return $comment;
+
     }
 
     public function getListComments($postId)
@@ -54,6 +56,24 @@ class CommentManager extends Manager
         }
         $q->closeCursor();
         return $comments;
+    }
+
+    public function update(Comment $comment)
+    {
+        $q = $this->_db->prepare('UPDATE comment SET title = :newtitle, content = :newcontent WHERE id = :id');
+        $affectedLines = $q->execute(array(
+            'newtitle' => $comment->title(),
+            'newcontent' => $comment->content(),
+            'id' => $comment->id()
+        ));
+        return $affectedLines;
+    }
+
+    public function exists($data)
+    {
+        $q = $this->_db->prepare('SELECT COUNT(*) FROM comment WHERE id = :id');
+        $q->execute(array('id' => $data));
+        return (bool) $q->fetchColumn();
     }
 
     public function setDb()
