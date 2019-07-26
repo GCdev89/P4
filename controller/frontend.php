@@ -50,3 +50,10 @@ function updateComment($commentId, $userId)
         throw new Exception('Identifiant incorrect.');
     }
 }
+
+function report($commentId)
+{
+    $commentManager = new Gaetan\P4\Model\CommentManager();
+    $comment = $commentManager->getComment($commentId);
+    require('view/frontoffice/reportView.php');
+}

@@ -28,7 +28,6 @@ class CommentManager extends Manager
 
     public function getComment($commentId)
     {
-
         $q = $this->_db->prepare('SELECT id, user_id userId, post_id postId, title, content, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM comment WHERE id = :id');
         $q->execute(array('id' => $commentId));
         $data = $q->fetch();
@@ -36,7 +35,6 @@ class CommentManager extends Manager
         $q->closeCursor();
 
         return $comment;
-
     }
 
     public function getListComments($postId)
@@ -46,7 +44,7 @@ class CommentManager extends Manager
         $q = $this->_db->prepare('SELECT u.pseudo userPseudo, c.id id, c.user_id userId, c.post_id postId, c.title title, c.content content, DATE_FORMAT(c.date, \'%d/%m/%Y %Hh%imin\') AS date
         FROM user u
         INNER JOIN comment c
-        ON c.user_id = u.id
+            ON c.user_id = u.id
         WHERE c.post_id = :post_id
         ORDER BY date DESC');
         $q->execute(array('post_id' => $postId));

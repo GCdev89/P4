@@ -6,7 +6,7 @@ $h1 = 'Vous êtes inscrit'
 <?php ob_start(); ?>
 <div class="col-4 mx-auto px-auto">
     <p>Bienvenue sur le blog <?= $_SESSION['pseudo'] ?></p>
-    <p>Cliquez pour consulter <a href="index.php">le blog</a>.</p>
+    <p>Cliquez pour revenir à la <a href="index.php">liste des articles</a>.</p>
 </div>
 
 <?php $content = ob_get_clean(); ?>

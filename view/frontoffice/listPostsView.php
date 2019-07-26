@@ -27,5 +27,7 @@ foreach ($posts as $aPost) {
 ?>
 </div>
 <?php $content = ob_get_clean(); ?>
-<?php require('view/frontoffice/navbar.php'); ?>
-<?php require('template.php'); ?>
+<?php
+require('view/frontoffice/navbar.php');
+require('view/backoffice/adminBar.php');
+require('template.php');

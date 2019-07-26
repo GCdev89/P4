@@ -3,6 +3,7 @@ require_once('model/Manager.php');
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
 require_once('model/UserManager.php');
+require_once('model/ReportManager.php');
 
 function addUser($pseudo, $password, $mail)
 {
@@ -31,7 +32,7 @@ function addUser($pseudo, $password, $mail)
         }
     }
     else {
-        throw new Exception('Ce pseudo existe déjà, merci d\'en choisir un autre ');
+        throw new Exception('Ces identifiants ne sont pas disponnibles, merci d\'en choisir un autre ');
     }
 }
 
@@ -117,6 +118,30 @@ function updatedComment($commentId, $userId, $title, $content)
     else {
         throw new Exception('Identifiant incorrect.');
     }
+}
 
+function reported($commentId, $reason)
+{
+    $commentManager = new Gaetan\P4\Model\CommentManager();
 
+    if ($commentManager->exists($commentId))
+    {
+        $data = ['userId' => $_SESSION['user_id'],
+                'commentId' => $commentId,
+                'reason' => $reason];
+        $report = new Gaetan\P4\Model\Report($data);
+        $reportManager = new Gaetan\P4\Model\ReportManager();
+        $affectedLines = $reportManager->add($report);
+
+        if ($affectedLines == false) {
+            throw new Exception('Impossible de modifier le commentaire.');
+        }
+        else {
+            $comment = $commentManager->getComment($commentId);
+            header('Location: index.php?action=post&id=' . $comment->postId());
+        }
+    }
+    else {
+        throw new Exception('Identifiant incorrect.');
+    }
 }

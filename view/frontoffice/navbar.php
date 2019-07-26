@@ -8,7 +8,7 @@
     <li class="nav-item pr-3"><a class="nav-link" href="#">Général</a></li>
 </ul>
 <?php
-if (isset($_SESSION['user_id']) && isset($_SESSION['pseudo']) && isset($_SESSION['role']))
+if (isset($_SESSION['user_id']) && isset($_SESSION['pseudo']))
 {
     echo
      '<p class="text-light mr-4 py-auto">Bonjour ' . $_SESSION['pseudo'] . '</p>

@@ -102,6 +102,22 @@ try {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
         }
+        elseif ($_GET['action'] == 'report') {
+            if (isset($_SESSION['user_id']) && isset($_GET['id']) && $_GET['id'] > 0) {
+                report($_GET['id']);
+            }
+            else {
+                throw new Exception('Aucun identifiant de billet envoyé');
+            }
+        }
+        elseif ($_GET['action'] == 'reported') {
+            if (isset($_SESSION['user_id']) && isset($_GET['id']) && isset($_POST['reason']) && $_GET['id'] > 0) {
+                reported($_GET['id'], $_POST['reason']);
+            }
+            else {
+                throw new Exception('Aucun identifiant de billet envoyé');
+            }
+        }
         else {
             listPosts();
         }

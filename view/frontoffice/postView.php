@@ -40,11 +40,9 @@ $h1 = 'Commentaires'
             }
             else {
                 echo
-                '<p><a href="index.php?action=report" class="btn btn-outline-warning">Signaler</a></p>';
+                '<p><a href="index.php?action=report&amp;id=' . $aComment->id() .'" class="btn btn-outline-warning">Signaler</a></p>';
             }
         };
-
-
     }
     ?>
     </div>
@@ -71,5 +69,7 @@ $h1 = 'Commentaires'
     ?>
 </div>
 <?php $content = ob_get_clean(); ?>
-<?php require('view/frontoffice/navbar.php'); ?>
-<?php require('template.php'); ?>
+<?php
+require('view/frontoffice/navbar.php');
+require('view/backoffice/adminBar.php');
+require('template.php');

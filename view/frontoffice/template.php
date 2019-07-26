@@ -14,20 +14,24 @@
             <?= $nav ?>
         </nav>
         <div class="container-fluid">
-            <div class="col-1 fixed-top mt-5 p-3 navbar-dark bg-dark">
-                <h4 class="text-light">Archives</h3>
-                <ul class="navbar-nav">
-                    <li class="nav-item pr-3"><a class="nav-link" href="#">Chapitres</a></li>
-                    <li class="nav-item pr-3"><a class="nav-link" href="#">Annonces</a></li>
-                    <li class="nav-item pr-3"><a class="nav-link" href="#">Général</a></li>
-                </ul>
-            </div>
-            <div class="col-md-8 mx-auto">
-                <h1 class="page-header ml-4 my-4"><?= $h1 ?></h1>
-                <div class="row">
-                    <?= $content ?>
+            <div class="row">
+                <div class="col-1 fixed-top mt-5 p-3 navbar-dark bg-dark">
+                    <h4 class="h5 text-light">Archives</h4>
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="#">Chapitres</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Annonces</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Général</a></li>
+                    </ul>
+                    <?= $adminBar ?>
+                </div>
+                <div class="col-md-8 mx-auto">
+                    <h1 class="page-header ml-4 my-4"><?= $h1 ?></h1>
+                    <div class="row">
+                        <?= $content ?>
+                    </div>
                 </div>
             </div>
+
         </div>
 
     </body>

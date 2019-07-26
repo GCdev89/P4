@@ -1,14 +1,13 @@
 <?php
 namespace Gaetan\P4\Model;
 
-class User
+Class Report
 {
     private $_id;
-    private $_role;
-    private $_pseudo;
-    private $_password;
-    private $_mail;
-    private $_date_creation;
+    private $_user_id;
+    private $_comment_id;
+    private $_reason;
+    private $_date;
 
     public function __construct(array $data)
     {
@@ -33,24 +32,19 @@ class User
         return $this->_id;
     }
 
-    public function role()
+    public function userId()
     {
-        return $this->_role;
+        return $this->_user_id;
     }
 
-    public function pseudo()
+    public function commentId()
     {
-        return $this->_pseudo;
+        return $this->_comment_id;
     }
 
-    public function password()
+    public function reason()
     {
-        return $this->_password;
-    }
-
-    public function mail()
-    {
-        return $this->_mail;
+        return $this->_reason;
     }
 
     public function date()
@@ -68,37 +62,29 @@ class User
         }
     }
 
-    public function setRole($role)
+    public function setUserId($userId)
     {
-        if(is_string($role))
+        $userId = (int) $userId;
+        if ($userId > 0) {
+            $this->_user_id = $userId;
+        }
+    }
+
+    public function setCommentId($commentId)
+    {
+        $commentId = (int) $commentId;
+        if ($commentId > 0) {
+            $this->_comment_id = $commentId;
+        }
+    }
+
+    public function setReason($reason)
+    {
+        if(is_string($reason))
         {
-            if ($role == 'admin' OR $role == 'common_user') {
-                $this->_role = $role;
+            if ($reason = 'discrimination' OR $reason = 'hate' OR $reason = 'else') {
+                $this->_reason = $reason;
             }
-        }
-    }
-
-    public function setPseudo($pseudo)
-    {
-        if(is_string($pseudo))
-        {
-            $this->_pseudo = $pseudo;
-        }
-    }
-
-    public function setPassword($password)
-    {
-        if(is_string($password))
-        {
-            $this->_password = $password;
-        }
-    }
-
-    public function setMail($mail)
-    {
-        if(is_string($mail))
-        {
-            $this->_mail = $mail;
         }
     }
 
@@ -109,5 +95,4 @@ class User
             $this->_date = $date;
         }
     }
-
 }
