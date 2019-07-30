@@ -57,7 +57,6 @@ function connection($pseudo, $password)
     else {
         throw new Exception('Mauvais identifiant ou mot de passe');
     }
-
 }
 
 function disconnect()
@@ -69,14 +68,11 @@ function disconnect()
 
 function addComment($postId, $title, $userId, $content)
 {
-    $report = 0;
-
     $data = [
     'postId' => $postId,
     'title' => $title,
     'userId' => $userId,
     'content' => $content,
-    'report' => $report
     ];
     $comment = new Gaetan\P4\Model\Comment($data);
     $commentManager = new Gaetan\P4\Model\CommentManager();
@@ -143,5 +139,24 @@ function reported($commentId, $reason)
     }
     else {
         throw new Exception('Identifiant incorrect.');
+    }
+}
+
+function addPost($userId, $type, $title, $content)
+{
+    $data = ['userId' => $userId,
+            'type' => $type,
+            'title' => $title,
+            'content' => $content];
+    $post = new Gaetan\P4\Model\Post($data);
+    $postManager = new Gaetan\P4\Model\PostManager();
+
+    $affectedLines = $postManager->add($post);
+
+    if ($affectedLines == false) {
+        throw new Exception('Impossible d\'ajouter le commentaire.');
+    }
+    else {
+        header('Location: index.php?action=listPosts');
     }
 }

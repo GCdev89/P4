@@ -16,12 +16,13 @@ class PostManager extends Manager
     public function add(Post $post)
     {
         $q = $this->_db->prepare('INSERT INTO post(user_id, type, title, content, date) VALUES(:user_id, :type, :title, :content, NOW())');
-        $q->execute(array(
+        $affectedLines = $q->execute(array(
             'user_id' => $post->userId(),
             'type' => $post->type(),
             'title' => $post->title(),
             'content' => $post->content()
         ));
+        return $affectedLines;
     }
 
     public function getPost($postId)
@@ -47,8 +48,30 @@ class PostManager extends Manager
         $q = $this->_db->query('SELECT u.pseudo userPseudo, p.id id, p.user_id userId, p.type type, p.title title, p.content content, DATE_FORMAT(p.date, \'%d/%m/%Y %Hh%imin\') AS date
         FROM user u
         INNER JOIN post p
-        ON p.user_id = u.id');
+            ON p.user_id = u.id
+        ORDER BY date DESC');
 
+        while($data = $q->fetch())
+        {
+            $posts[] = new Post($data);
+        }
+        $q->closeCursor();
+
+        return $posts;
+    }
+
+    public function getPostsByType($type)
+    {
+        $posts = [];
+
+        $q = $this->_db->prepare('SELECT u.pseudo userPseudo, p.id id, p.user_id userId, p.type type, p.title title, p.content content, DATE_FORMAT(p.date, \'%d/%m/%Y %Hh%imin\') AS date
+        FROM user u
+        INNER JOIN post p
+            ON p.user_id = u.id
+        WHERE p.type = :type
+        ORDER BY date DESC');
+
+        $q->execute(array('type' => $type));
         while($data = $q->fetch())
         {
             $posts[] = new Post($data);

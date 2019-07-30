@@ -16,7 +16,7 @@ foreach ($posts as $aPost) {
             <p class="pl-3">' . htmlspecialchars($aPost->title()) . ' par : ' .  htmlspecialchars($aPost->userPseudo()) . ', le : ' .  htmlspecialchars($aPost->date()) .'</p>
         </div>
         <div class="row">
-            <p class="pl-3 pb-2 bg-light" >' .  htmlspecialchars($aPost->content()) . '</p>
+            <div class="px-3 py-1 bg-light" >' .  $aPost->content() . '</div>
         </div>
         <div class="row">
             <p class="col-4"><a href="index.php?action=post&amp;id=' . $aPost->id() .'">Commentaires</a></p>

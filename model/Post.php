@@ -105,7 +105,7 @@ class Post
     {
         if(is_string($type))
         {
-            if ($type = 'chapters' OR $type = 'announcement' OR $type = 'general') {
+            if ($type == 'chapter' OR $type == 'announcement' OR $type == 'general') {
                 $this->_type = $type;
             }
         }

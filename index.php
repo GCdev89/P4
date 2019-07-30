@@ -18,6 +18,19 @@ try {
                 throw new Exception('Aucun idenditifiant de billet envoyé');
             }
         }
+        elseif ($_GET['action'] == 'getByType') {
+            if (isset($_GET['type'])) {
+                if ($_GET['type'] == 'chapter' OR $_GET['type'] == 'announcement' OR $_GET['type'] == 'general') {
+                    getByType($_GET['type']);
+                }
+                else {
+                    listPosts();
+                }
+            }
+            else {
+                listPosts();
+            }
+        }
         elseif ($_GET['action'] == 'registration')
         {
             if ($_GET['sent'] == 'no') {
@@ -112,10 +125,33 @@ try {
         }
         elseif ($_GET['action'] == 'reported') {
             if (isset($_SESSION['user_id']) && isset($_GET['id']) && isset($_POST['reason']) && $_GET['id'] > 0) {
-                reported($_GET['id'], $_POST['reason']);
+                if ($_POST['reason'] != 'NULL') {
+                    reported($_GET['id'], $_POST['reason']);
+                }
+                else {
+                    throw new Exception('Merci de choisir une raison');
+                }
             }
             else {
                 throw new Exception('Aucun identifiant de billet envoyé');
+            }
+        }
+        elseif (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+            if ($_GET['action'] == 'new') {
+                newPost();
+            }
+            elseif ($_GET['action'] == 'addPost') {
+                if (isset($_POST['type']) && isset($_POST['title']) && isset($_POST['content'])) {
+                    if ($_POST['type'] != 'NULL') {
+                    addPost($_SESSION['user_id'], $_POST['type'], $_POST['title'], $_POST['content']);
+                    }
+                    else {
+                        throw new Exception('Merci de choisir un type de billet.');
+                    }
+                }
+                else {
+                    throw new Exception('Merci de remplir tous les champs.');
+                }
             }
         }
         else {

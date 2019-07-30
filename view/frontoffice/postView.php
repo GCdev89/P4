@@ -12,7 +12,7 @@ $h1 = 'Commentaires'
                 <p class="pl-2"> <?= htmlspecialchars($post->title()) ?> par : <?=htmlspecialchars($post->userPseudo()) ?>, le : <?= htmlspecialchars($post->date()) ?> </p>
             </div>
             <div class="row">
-                <p class="p-2 bg-light" ><?= htmlspecialchars($post->content()) ?></p>
+                <div class="px-3 py-1 bg-light" ><?= $post->content() ?></div>
             </div>
         </div>
     </div>
@@ -23,12 +23,12 @@ $h1 = 'Commentaires'
     foreach ($comments as $aComment) {
 
         echo
-        '<div class="col-11 mx-auto my-auto">
+        '<div class="col-11 mx-auto my-2">
             <div class="row bg-warning text-light">
                 <p class="pl-2">' . htmlspecialchars($aComment->title()) . ' par : ' . htmlspecialchars($aComment->userPseudo()) . ' le : ' . htmlspecialchars($aComment->date()) .'</p>
             </div>
             <div class="row">
-                <p class="p-2 col-12 bg-light" >' . htmlspecialchars($aComment->content()) .'</p>
+                <div class="p-2 col-12 bg-light" >' . $aComment->content() .'</div>
             </div>
         </div>';
         if (isset($_SESSION['user_id']))

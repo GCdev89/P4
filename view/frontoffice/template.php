@@ -4,6 +4,12 @@
         <meta charset="utf-8" />
         <title><?= $title ?></title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="public/tinymce/tinymce.js" referrerpolicy="origin"></script>
+        <script>
+        tinymce.init({
+          selector: '#content'
+        });
+        </script>
 
         <link href="style.css" rel="stylesheet" />
     </head>
@@ -18,6 +24,7 @@
                 <div class="col-1 fixed-top mt-5 p-3 navbar-dark bg-dark">
                     <h4 class="h5 text-light">Archives</h4>
                     <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="#">Tous</a></li>                        
                         <li class="nav-item"><a class="nav-link" href="#">Chapitres</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Annonces</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Général</a></li>

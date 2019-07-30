@@ -5,5 +5,7 @@ $h1 = 'Erreur'
 
 
 <?php $content = 'Erreur : ' . $errorMessage; ?>
-<?php require('frontoffice/navbar.php') ?>
-<?php require('frontoffice/template.php'); ?>
+<?php
+require('view/frontoffice/navbar.php');
+require('view/backoffice/adminBar.php');
+require('view/frontoffice/template.php');

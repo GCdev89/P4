@@ -23,6 +23,14 @@ function post($postId)
     require('view/frontoffice/postView.php');
 }
 
+function getByType($type)
+{
+    $postManager = new Gaetan\P4\Model\PostManager();
+    $posts = $postManager->getPostsByType($type);
+
+    require('view/frontoffice/listPostsView.php');
+}
+
 function registration()
 {
     require('view/frontoffice/registrationView.php');
@@ -56,4 +64,9 @@ function report($commentId)
     $commentManager = new Gaetan\P4\Model\CommentManager();
     $comment = $commentManager->getComment($commentId);
     require('view/frontoffice/reportView.php');
+}
+
+function newPost()
+{
+    require('view/backoffice/newPostView.php');
 }

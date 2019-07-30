@@ -3,15 +3,15 @@
 <a class="navbar-brand" href="index.php">Super Blog</a>
 <ul class="navbar-nav flex-row mr-auto ml-4 mt-2 mt-lg-0">
     <li class="nav-item pr-3"><a class="nav-link" href="index.php">Accueil</a></li>
-    <li class="nav-item pr-3"><a class="nav-link" href="#">Chapitres</a></li>
-    <li class="nav-item pr-3"><a class="nav-link" href="#">Annonces</a></li>
-    <li class="nav-item pr-3"><a class="nav-link" href="#">Général</a></li>
+    <li class="nav-item pr-3"><a class="nav-link" href="index.php?action=getByType&amp;type=chapter">Chapitres</a></li>
+    <li class="nav-item pr-3"><a class="nav-link" href="index.php?action=getByType&amp;type=announcement">Annonces</a></li>
+    <li class="nav-item pr-3"><a class="nav-link" href="index.php?action=getByType&amp;type=general">Général</a></li>
 </ul>
 <?php
 if (isset($_SESSION['user_id']) && isset($_SESSION['pseudo']))
 {
     echo
-     '<p class="text-light mr-4 py-auto">Bonjour ' . $_SESSION['pseudo'] . '</p>
+     '<p class="text-light mr-4 py-auto">Bonjour ' . htmlspecialchars($_SESSION['pseudo']) . '</p>
      <a href="index.php?action=disconnect" class="btn btn-outline-danger">Déconnexion</a>';
 }
 else
