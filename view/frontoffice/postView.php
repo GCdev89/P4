@@ -12,7 +12,9 @@ $h1 = 'Commentaires'
                 <p class="pl-2"> <?= htmlspecialchars($post->title()) ?> par : <?=htmlspecialchars($post->userPseudo()) ?>, le : <?= htmlspecialchars($post->date()) ?> </p>
             </div>
             <div class="row">
-                <div class="px-3 py-1 bg-light" ><?= $post->content() ?></div>
+                <div class="post_overlay">
+                    <div class="px-3 py-1 post" ><?= $post->content() ?></div>
+                </div>
             </div>
         </div>
     </div>

@@ -24,7 +24,7 @@ $h1 = 'Signaler un commentaire'
                     <div class="form-group">
                         <label for="reason">Quelle est la raison du signalement ?</label>
                         <select name="reason" id="reason" class="form-control ml-3">
-                            <option value="NULL" selected></option>
+                            <option value="NULL" selected="selected"></option>
                             <option value="discrimination">Discriminatoire</option>
                             <option value="hate">Propos haineux</option>
                             <option value="else">Autre</option>

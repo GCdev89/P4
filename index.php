@@ -153,6 +153,30 @@ try {
                     throw new Exception('Merci de remplir tous les champs.');
                 }
             }
+            elseif ($_GET['action'] == 'updateListPost') {
+                updateListPost();
+            }
+            elseif ($_GET['action'] == 'updatePost') {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    updatePost($_GET['id']);
+                }
+                else {
+                    throw new Exception('Aucun identifiant de billet envoyé');
+                }
+            }
+            elseif ($_GET['action'] == 'updatedPost') {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    if (!empty($_POST['type']) && !empty($_POST['title']) && !empty($_POST['content'])) {
+                        updatedPost($_GET['id'], $_POST['type'], $_POST['title'], $_POST['content']);
+                    }
+                    else {
+                        throw new Exception('Merci de remplir tous les champs.');
+                    }
+                }
+                else {
+                    throw new Exception('Merci de remplir tous les champs.');
+                }
+            }
         }
         else {
             listPosts();

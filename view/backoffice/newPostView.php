@@ -8,11 +8,11 @@ $h1 = 'Nouveau billet'
     <div class="row mt-3">
         <p><a href="index.php">Retour à la liste des billets</a></p>
 
-        <form action="index.php?action=addPost" method="post" class="col-12 mx-auto mb-5 p-auto bg-light">
+        <form action="index.php?action=addPost" method="post" class="col-12 mx-auto mb-5 p-auto bg-dark text-light">
             <div class="form-group">
                 <label for="type">Type de billet</label>
                 <select name="type" id="type" class="form-control col-2">
-                    <option value="NULL" selected></option>
+                    <option value="NULL" selected="selected"></option>
                     <option value="chapter">Chapitre</option>
                     <option value="announcement">Annonce</option>
                     <option value="general">Général</option>

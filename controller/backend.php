@@ -160,3 +160,26 @@ function addPost($userId, $type, $title, $content)
         header('Location: index.php?action=listPosts');
     }
 }
+
+function updatedPost($id, $type, $title, $content)
+{
+    $postManager = new Gaetan\P4\Model\PostManager();
+    if ($postManager->exists($id))
+    {
+        $data = ['id' => $id,
+                'type' => $type,
+                'title' => $title,
+                'content' => $content];
+        $post = new Gaetan\P4\Model\Post($data);
+        $affectedLines = $postManager->update($post);
+        if ($affectedLines == false) {
+            throw new Exception('Impossible de modifier le billet.');
+        }
+        else {
+            header('Location: index.php');
+        }
+    }
+    else {
+        throw new Exception('Identifiant de billet incorrect.');
+    }
+}

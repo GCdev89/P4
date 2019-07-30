@@ -25,9 +25,21 @@ class PostManager extends Manager
         return $affectedLines;
     }
 
+    public function update(Post $post)
+    {
+        $q = $this->_db->prepare('UPDATE post SET type = :newtype, title = :newtitle, content = :newcontent WHERE id = :id');
+        $affectedLines = $q->execute(array(
+            'newtype' => $post->type(),
+            'newtitle' => $post->title(),
+            'newcontent' => $post->content(),
+            'id' => $post->id()
+        ));
+        return $affectedLines;
+    }
+
     public function getPost($postId)
     {
-        $q = $this->_db->prepare('SELECT u.pseudo userPseudo, p.id id, p.user_id userId, p.title title, p.content content, DATE_FORMAT(p.date, \'%d/%m/%Y à %Hh%imin%ss\') AS date
+        $q = $this->_db->prepare('SELECT u.pseudo userPseudo, p.id id, p.user_id userId, p.type type, p.title title, p.content content, DATE_FORMAT(p.date, \'%d/%m/%Y à %Hh%imin%ss\') AS date
         FROM user u
         INNER JOIN post p
         ON p.user_id = u.id
@@ -79,6 +91,13 @@ class PostManager extends Manager
         $q->closeCursor();
 
         return $posts;
+    }
+
+    public function exists($data)
+    {
+        $q = $this->_db->prepare('SELECT COUNT(*) FROM post WHERE id = :id');
+        $q->execute(array('id' => $data));
+        return (bool) $q->fetchColumn();
     }
 
     public function setDb()

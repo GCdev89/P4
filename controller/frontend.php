@@ -70,3 +70,25 @@ function newPost()
 {
     require('view/backoffice/newPostView.php');
 }
+
+function updateListPost()
+{
+    $postManager = new Gaetan\P4\Model\PostManager();
+    $posts = $postManager->getListPosts();
+
+    require('view/backoffice/updateListPostView.php');
+
+}
+
+function updatePost($id)
+{
+    $postManager = new Gaetan\P4\Model\PostManager();
+    if ($postManager->exists($id))
+    {
+        $post = $postManager->getPost($id);
+        require('view/backoffice/updatePostView.php');
+    }
+    else {
+        throw new Exception('Identifiant de billet incorrect.');
+    }
+}

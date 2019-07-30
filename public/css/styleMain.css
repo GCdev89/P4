@@ -1,0 +1,15 @@
+body
+{
+    background-image: url('../images/arctic-art-backdrop-326240.jpg');
+
+}
+
+.post
+{
+    background-color: rgba(200, 200, 200, 0.5);
+}
+
+.post_overlay
+{
+    background-image: url('../images/ancient-antique-art-235985.jpg');
+}

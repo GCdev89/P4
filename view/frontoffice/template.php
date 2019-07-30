@@ -11,7 +11,8 @@
         });
         </script>
 
-        <link href="style.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="public/css/styleMain.css" rel="stylesheet" />
     </head>
 
     <body>
@@ -24,7 +25,7 @@
                 <div class="col-1 fixed-top mt-5 p-3 navbar-dark bg-dark">
                     <h4 class="h5 text-light">Archives</h4>
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#">Tous</a></li>                        
+                        <li class="nav-item"><a class="nav-link" href="#">Tous</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Chapitres</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Annonces</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Général</a></li>
