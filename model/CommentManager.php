@@ -66,6 +66,14 @@ class CommentManager extends Manager
         return $affectedLines;
     }
 
+    public function delete($commentId)
+    {
+        $q = $this->_db->prepare('DELETE FROM comment WHERE id = :id');
+        $affectedLines = $q->execute(array('id' => $commentId));
+
+        return $affectedLines;
+    }
+
     public function exists($data)
     {
         $q = $this->_db->prepare('SELECT COUNT(*) FROM comment WHERE id = :id');

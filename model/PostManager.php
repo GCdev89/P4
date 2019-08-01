@@ -93,6 +93,14 @@ class PostManager extends Manager
         return $posts;
     }
 
+    public function delete($postId)
+    {
+        $q = $this->_db->prepare('DELETE FROM post WHERE id = :id');
+        $affectedLines = $q->execute(array('id' => $postId));
+
+        return $affectedLines;
+    }
+
     public function exists($data)
     {
         $q = $this->_db->prepare('SELECT COUNT(*) FROM post WHERE id = :id');

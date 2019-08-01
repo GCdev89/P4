@@ -116,6 +116,29 @@ function updatedComment($commentId, $userId, $title, $content)
     }
 }
 
+function deleteComment($userId, $commentId)
+{
+    $commentManager = new Gaetan\P4\Model\CommentManager();
+    if ($commentManager->exists($commentId)) {
+        $comment = $commentManager->getComment($commentId);
+        if ($comment->userId() == $userId) {
+            $affectedLines = $commentManager->delete($commentId);
+            if ($affectedLines == false) {
+                throw new Exception('Il vous est impossible de faire cette action');
+            }
+            else {
+                header('Location: index.php?action=post&id=' . $comment->postId());
+            }
+        }
+        else {
+            throw new Exception('Il vous est impossible de faire cette action');
+        }
+    }
+    else {
+        throw new Exception('Aucun identifiant de billet envoyé');
+    }
+}
+
 function reported($commentId, $reason)
 {
     $commentManager = new Gaetan\P4\Model\CommentManager();
@@ -181,5 +204,28 @@ function updatedPost($id, $type, $title, $content)
     }
     else {
         throw new Exception('Identifiant de billet incorrect.');
+    }
+}
+
+function deletePost($userId, $postId)
+{
+    $postManager = new Gaetan\P4\Model\PostManager();
+    if ($postManager->exists($postId)) {
+        $post = $postManager->getPost($postId);
+        if ($post->userId() == $userId) {
+            $affectedLines = $postManager->delete($postId);
+            if ($affectedLines == false) {
+                throw new Exception('Il vous est impossible de faire cette action');
+            }
+            else {
+                header('Location: index.php?action=updateListPosts');
+            }
+        }
+        else {
+            throw new Exception('Il vous est impossible de faire cette action');
+        }
+    }
+    else {
+        throw new Exception('Aucun identifiant de billet envoyé');
     }
 }

@@ -8,6 +8,11 @@ Class Report
     private $_comment_id;
     private $_reason;
     private $_date;
+    private $_comment_user_id;
+    private $_title;
+    private $_content;
+    private $_comment_date;
+
 
     public function __construct(array $data)
     {
@@ -52,6 +57,26 @@ Class Report
         return $this->_date;
     }
 
+    public function commentUserId()
+    {
+        return $this->_comment_user_id;
+    }
+
+    public function title()
+    {
+        return $this->_title;
+    }
+
+    public function content()
+    {
+        return $this->_content;
+    }
+
+    public function commentDate()
+    {
+        return $this->_comment_date;
+    }
+
     // Setters
 
     public function setId($id)
@@ -93,6 +118,38 @@ Class Report
         if(is_string($date))
         {
             $this->_date = $date;
+        }
+    }
+
+    public function setCommentUserId($commentUserId)
+    {
+        $commentUserId = (int) $commentUserId;
+        if ($commentUserId > 0) {
+            $this->_comment_user_id = $commentUserId;
+        }
+    }
+
+    public function setTitle($title)
+    {
+        if(is_string($title))
+        {
+            $this->_title = $title;
+        }
+    }
+
+    public function setContent($content)
+    {
+        if(is_string($content))
+        {
+            $this->_content = $content;
+        }
+    }
+
+    public function setCommentDate($commentDate)
+    {
+        if(is_string($commentDate))
+        {
+            $this->_comment_date = $commentDate;
         }
     }
 }

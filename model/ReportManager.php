@@ -24,6 +24,26 @@ Class ReportManager extends Manager
         return $affectedLines;
     }
 
+    public function getListReports()
+    {
+        $reports = [];
+
+        $q = $this->_db->query('SELECT u.pseudo userPseudo, r.user_id userId, r.comment_id commentId, r.reason reason, DATE_FORMAT(r.date, \'%d/%m/%Y %Hh%imin\') AS date, c.user_id commentUserId, c.title title, c.content content, c.date commentDate
+        FROM user u
+        INNER JOIN report r
+            ON r.user_id = u.id
+        INNER JOIN comment c
+            ON r.comment_id = c.id');
+
+        while($data = $q->fetch())
+        {
+            $reports[] = new Report($data);
+        }
+        $q->closeCursor();
+
+        return $reports;
+    }
+
     public function setDb()
     {
         $db = $this->dbConnect();

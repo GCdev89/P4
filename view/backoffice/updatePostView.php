@@ -26,8 +26,9 @@ $h1 = 'Edition de billet'
                 <label for="content">Contenu</label><br />
                 <textarea id="content" name="content" class="form-control"><?=$post->content()?></textarea>
             </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" />
+            <div class="form-group d-flex justify-content-around mb-2">
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+                <a href="index.php?action=delete_post&amp;id=<?= $post->id()?>" class="btn btn-danger">Supprimer</a>
             </div>
         </form>
     </div>

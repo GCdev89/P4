@@ -71,7 +71,7 @@ function newPost()
     require('view/backoffice/newPostView.php');
 }
 
-function updateListPost()
+function updateListPosts()
 {
     $postManager = new Gaetan\P4\Model\PostManager();
     $posts = $postManager->getListPosts();
@@ -91,4 +91,20 @@ function updatePost($id)
     else {
         throw new Exception('Identifiant de billet incorrect.');
     }
+}
+
+function moderation()
+{
+    $reportManager = new Gaetan\P4\Model\ReportManager();
+    $reports = $reportManager->getListReports();
+
+    require('view/backoffice/moderationView.php');
+}
+
+function usersList()
+{
+    $userManager = new Gaetan\P4\Model\UserManager();
+    $users = $userManager->getListUsers();
+
+    require('view/backoffice/listUsersView.php');
 }

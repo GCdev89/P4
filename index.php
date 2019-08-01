@@ -115,6 +115,19 @@ try {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
         }
+        elseif ($_GET['action'] == 'delete_comment') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                if (!empty($_SESSION['user_id'])) {
+                    deleteComment($_SESSION['user_id'], $_GET['id']);
+                }
+                else {
+                    throw new Exception('Vous n\'avez pas l\'autorisation requise');
+                }
+            }
+            else {
+                throw new Exception('Aucun identifiant de billet envoyé');
+            }
+        }
         elseif ($_GET['action'] == 'report') {
             if (isset($_SESSION['user_id']) && isset($_GET['id']) && $_GET['id'] > 0) {
                 report($_GET['id']);
@@ -153,8 +166,8 @@ try {
                     throw new Exception('Merci de remplir tous les champs.');
                 }
             }
-            elseif ($_GET['action'] == 'updateListPost') {
-                updateListPost();
+            elseif ($_GET['action'] == 'updateListPosts') {
+                updateListPosts();
             }
             elseif ($_GET['action'] == 'updatePost') {
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -176,6 +189,25 @@ try {
                 else {
                     throw new Exception('Merci de remplir tous les champs.');
                 }
+            }
+            elseif ($_GET['action'] == 'delete_post') {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    if (!empty($_SESSION['user_id'])) {
+                        deletePost($_SESSION['user_id'], $_GET['id']);
+                    }
+                    else {
+                        throw new Exception('Vous n\'avez pas l\'autorisation requise');
+                    }
+                }
+                else {
+                    throw new Exception('Aucun identifiant de billet envoyé');
+                }
+            }
+            elseif ($_GET['action'] == 'moderation') {
+                moderation();
+            }
+            elseif ($_GET['action'] == 'users_list') {
+                usersList();
             }
         }
         else {

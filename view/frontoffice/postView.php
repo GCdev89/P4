@@ -4,7 +4,7 @@ $h1 = 'Commentaires'
 ?>
 
 <?php ob_start(); ?>
-<div class="mx-auto px-auto">
+<div class="col-12 mx-auto px-auto">
     <div class="row mt-3">
         <p><a href="index.php">Retour à la liste des billets</a></p>
         <div class="col-12 my-auto">
@@ -12,7 +12,7 @@ $h1 = 'Commentaires'
                 <p class="pl-2"> <?= htmlspecialchars($post->title()) ?> par : <?=htmlspecialchars($post->userPseudo()) ?>, le : <?= htmlspecialchars($post->date()) ?> </p>
             </div>
             <div class="row">
-                <div class="post_overlay">
+                <div class="post_overlay col-12 p-0">
                     <div class="px-3 py-1 post" ><?= $post->content() ?></div>
                 </div>
             </div>

@@ -55,7 +55,7 @@ class UserManager extends Manager
     {
         $users = [];
 
-        $q = $this->_db->query('SELECT id, role, name, forname, mail, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM user');
+        $q = $this->_db->query('SELECT id, role, pseudo, mail, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM user');
 
         while($data = $q->fetch())
         {

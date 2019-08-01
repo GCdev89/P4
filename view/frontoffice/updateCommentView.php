@@ -11,14 +11,15 @@ $h1 = 'Commentaires'
             <form action="index.php?action=comment_updated&amp;id=<?= $comment->postId(); ?>&amp;id_comment=<?= $comment->id(); ?>" method="post" class="col-8 mx-auto mb-5 p-auto bg-light">
                 <div class="form-group" >
                     <label for="title">Titre du commentaire</label><br />
-                    <input type="text" id="title" name="title" value="<?= $comment->title(); ?>" class="form-control" />
+                    <input type="text" id="title" name="title" value="<?= htmlspecialchars($comment->title()); ?>" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label for="content">Commentaire</label><br />
                     <textarea id="content" name="content" class="form-control"><?= $comment->content(); ?></textarea>
                 </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary" />
+                <div class="form-group d-flex justify-content-around mb-2">
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    <a href="index.php?action=delete_comment&amp;id=<?= $comment->id()?>" class="btn btn-danger">Supprimer</a>
                 </div>
             </form>
         </div>
