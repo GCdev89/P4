@@ -130,20 +130,7 @@ try {
         }
         elseif ($_GET['action'] == 'report') {
             if (isset($_SESSION['user_id']) && isset($_GET['id']) && $_GET['id'] > 0) {
-                report($_GET['id']);
-            }
-            else {
-                throw new Exception('Aucun identifiant de billet envoyé');
-            }
-        }
-        elseif ($_GET['action'] == 'reported') {
-            if (isset($_SESSION['user_id']) && isset($_GET['id']) && isset($_POST['reason']) && $_GET['id'] > 0) {
-                if ($_POST['reason'] != 'NULL') {
-                    reported($_GET['id'], $_POST['reason']);
-                }
-                else {
-                    throw new Exception('Merci de choisir une raison');
-                }
+                report($_GET['id'], $_SESSION['user_id']);
             }
             else {
                 throw new Exception('Aucun identifiant de billet envoyé');
@@ -205,6 +192,22 @@ try {
             }
             elseif ($_GET['action'] == 'moderation') {
                 moderation();
+            }
+            elseif ($_GET['action'] == 'ignore') {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    ignore($_GET['id']);
+                }
+                else {
+                    throw new Exception('Aucun identifiant de billet envoyé');
+                }
+            }
+            elseif ($_GET['action'] == 'delete_reported') {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    deleteReported($_GET['id']);
+                }
+                else {
+                    throw new Exception('Aucun identifiant de billet envoyé');
+                }
             }
             elseif ($_GET['action'] == 'users_list') {
                 usersList();

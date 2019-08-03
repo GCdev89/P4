@@ -16,9 +16,11 @@ function post($postId)
 {
     $postManager = new Gaetan\P4\Model\PostManager();
     $commentManager = new Gaetan\P4\Model\CommentManager();
+    $reportManager = new Gaetan\P4\Model\ReportManager();
 
     $post = $postManager->getPost($postId);
     $comments = $commentManager->getListComments($postId);
+    //$reports = $reportManager->getListReports();
 
     require('view/frontoffice/postView.php');
 }
@@ -59,12 +61,6 @@ function updateComment($commentId, $userId)
     }
 }
 
-function report($commentId)
-{
-    $commentManager = new Gaetan\P4\Model\CommentManager();
-    $comment = $commentManager->getComment($commentId);
-    require('view/frontoffice/reportView.php');
-}
 
 function newPost()
 {
@@ -95,8 +91,9 @@ function updatePost($id)
 
 function moderation()
 {
-    $reportManager = new Gaetan\P4\Model\ReportManager();
-    $reports = $reportManager->getListReports();
+    $commentManager = new Gaetan\P4\Model\CommentManager();
+    $reportCount = $commentManager->countReport();
+    $comments = $commentManager->getReportedList();
 
     require('view/backoffice/moderationView.php');
 }

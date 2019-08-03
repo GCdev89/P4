@@ -139,25 +139,27 @@ function deleteComment($userId, $commentId)
     }
 }
 
-function reported($commentId, $reason)
+function report($commentId, $userId)
 {
     $commentManager = new Gaetan\P4\Model\CommentManager();
-
     if ($commentManager->exists($commentId))
     {
-        $data = ['userId' => $_SESSION['user_id'],
-                'commentId' => $commentId,
-                'reason' => $reason];
-        $report = new Gaetan\P4\Model\Report($data);
-        $reportManager = new Gaetan\P4\Model\ReportManager();
-        $affectedLines = $reportManager->add($report);
-
-        if ($affectedLines == false) {
-            throw new Exception('Impossible de modifier le commentaire.');
+        $comment = $commentManager->getComment($commentId);
+        if ($comment->userId() != $userId) {
+            $report = 1;
+            $data = ['id' => $commentId,
+                    'report' => $report];
+            $commentReported = new Gaetan\P4\Model\Comment($data);
+            $affectedLines = $commentManager->report($commentReported);
+            if ($affectedLines == false) {
+                throw new Exception('Impossible de signaler le commentaire.');
+            }
+            else {
+                header('Location: index.php?action=post&id=' . $comment->postId());
+            }
         }
         else {
-            $comment = $commentManager->getComment($commentId);
-            header('Location: index.php?action=post&id=' . $comment->postId());
+            throw new Exception('Identifiant incorrect.');
         }
     }
     else {
@@ -219,6 +221,59 @@ function deletePost($userId, $postId)
             }
             else {
                 header('Location: index.php?action=updateListPosts');
+            }
+        }
+        else {
+            throw new Exception('Il vous est impossible de faire cette action');
+        }
+    }
+    else {
+        throw new Exception('Aucun identifiant de billet envoyé');
+    }
+}
+
+
+function ignore($commentId)
+{
+    $commentManager = new Gaetan\P4\Model\CommentManager();
+    if ($commentManager->exists($commentId))
+    {
+        $comment = $commentManager->getComment($commentId);
+        if ($comment->report() == 1) {
+            $report = 0;
+            $data = ['id' => $commentId,
+                    'report' => $report];
+            $commentReported = new Gaetan\P4\Model\Comment($data);
+            $affectedLines = $commentManager->report($commentReported);
+            if ($affectedLines == false) {
+                throw new Exception('Impossible d\'ignorer le signalement.');
+            }
+            else {
+                header('Location: index.php?action=moderation');
+            }
+        }
+        else {
+            throw new Exception('Identifiant incorrect. 1');
+        }
+
+    }
+    else {
+        throw new Exception('Identifiant incorrect. 2');
+    }
+}
+
+function deleteReported($commentId)
+{
+    $commentManager = new Gaetan\P4\Model\CommentManager();
+    if ($commentManager->exists($commentId)) {
+        $comment = $commentManager->getComment($commentId);
+        if ($comment->report() == 1) {
+            $affectedLines = $commentManager->delete($commentId);
+            if ($affectedLines == false) {
+                throw new Exception('Il vous est impossible de faire cette action');
+            }
+            else {
+                header('Location: index.php?action=moderation');
             }
         }
         else {

@@ -19,7 +19,7 @@ class Comment
     private $_user_pseudo;
     private $_title;
     private $_content;
-    private $_report_user_id;
+    private $_report;
     private $_date;
 
     public function __construct(array $data)
@@ -70,9 +70,9 @@ class Comment
         return $this->_content;
     }
 
-    public function reportUserId()
+    public function report()
     {
-        return $this->_report_user_id;
+        return $this->_report;
     }
 
     public function date()
@@ -130,11 +130,11 @@ class Comment
         }
     }
 
-    public function setReportUserId($reportUserId)
+    public function setReport($report)
     {
-        $reportUserId = (int) $reportUserId;
-        if ($reportUserId >= 0) {
-            $this->_report_user_id = $reportUserId;
+        $report = (int) $report;
+        if ($report >= 0) {
+            $this->_report = $report;
         }
     }
 

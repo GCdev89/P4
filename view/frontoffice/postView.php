@@ -38,11 +38,16 @@ $h1 = 'Commentaires'
             if ($_SESSION['user_id'] == $aComment->userId())
             {
                 echo
-                '<p><a href="index.php?action=comment_edit&amp;id=' . $aComment->id() .'" class="btn btn-outline-primary">Modifier</a></p>';
+                '<p><a href="index.php?action=comment_edit&amp;id=' . $aComment->id() .'" class="btn btn-outline-primary btn-sm">Modifier</a></p>';
             }
             else {
-                echo
-                '<p><a href="index.php?action=report&amp;id=' . $aComment->id() .'" class="btn btn-outline-warning">Signaler</a></p>';
+                if ($aComment->report() == 1) {
+                    echo '<p>En attente de modération.</p>';
+                }
+                else {
+                    echo
+                    '<p><a href="index.php?action=report&amp;id=' . $aComment->id() .'" class="btn btn-outline-warning btn-sm">Signaler</a></p>';
+                }
             }
         };
     }
