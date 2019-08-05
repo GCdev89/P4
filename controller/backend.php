@@ -3,7 +3,6 @@ require_once('model/Manager.php');
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
 require_once('model/UserManager.php');
-require_once('model/ReportManager.php');
 
 function addUser($pseudo, $password, $mail)
 {
@@ -17,7 +16,7 @@ function addUser($pseudo, $password, $mail)
     ];
     $userManager = new Gaetan\P4\Model\UserManager();
 
-    if (!$userManager->exists($_POST['pseudo'])) {
+    if (!$userManager->pseudoExists($_POST['pseudo']) && !$userManager->mailExists($_POST['mail'])) {
         $user = new Gaetan\P4\Model\User($data);
         $affectedLines = $userManager->add($user);
         if ($affectedLines == false) {
@@ -28,6 +27,7 @@ function addUser($pseudo, $password, $mail)
             $_SESSION['user_id'] = $userConnected->id();
             $_SESSION['pseudo'] = $pseudo;
             $_SESSION['role'] = $userConnected->role();
+
             header('Location: index.php?action=registered');
         }
     }
@@ -36,26 +36,83 @@ function addUser($pseudo, $password, $mail)
     }
 }
 
-function connection($pseudo, $password)
+function updateMail($userId, $mail, $password)
 {
     $userManager = new Gaetan\P4\Model\UserManager();
-    $user = $userManager->getUser($pseudo);
-
-    if (!empty($user)) {
+    if ($userManager->exists($userId)) {
+        $user = $userManager->getUser($userId);
         $isPasswordCorrect = password_verify($password, $user->password());
 
         if ($isPasswordCorrect) {
-            $_SESSION['user_id'] = $user->id();
-            $_SESSION['pseudo'] = $pseudo;
-            $_SESSION['role'] = $user->role();
-            header('Location: index.php');
+            $data = ['id' => $userId, 'mail' => $mail];
+            $userUpdated = new Gaetan\P4\Model\User($data);
+            $affectedLines = $userManager->updateMail($userUpdated);
+            if ($affectedLines == false) {
+                throw new Exception('Impossible de modifier le mail.');
+            }
+            else {
+                header('Location: index.php?action=user_profile');
+            }
         }
         else {
             throw new Exception('Mauvais identifiant ou mot de passe');
         }
     }
     else {
-        throw new Exception('Mauvais identifiant ou mot de passe');
+        throw new Exception('Identifiant incorrect.');
+    }
+}
+
+function updatePassword($userId, $password, $newPassword)
+{
+    $userManager = new Gaetan\P4\Model\UserManager();
+    if ($userManager->exists($userId)) {
+        $user = $userManager->getUser($userId);
+
+        $isPasswordCorrect = password_verify($password, $user->password());
+        if ($isPasswordCorrect) {
+            $chopPass = password_hash($newPassword, PASSWORD_DEFAULT);
+            $data = ['id' => $userId, 'password' => $chopPass];
+            $userUpdated = new Gaetan\P4\Model\User($data);
+            $affectedLines = $userManager->updatePassword($userUpdated);
+            if ($affectedLines == false) {
+                throw new Exception('Impossible de modifier le mot de passe.');
+            }
+            else {
+                header('Location: index.php?action=user_profile');
+            }
+        }
+        else {
+            throw new Exception('Mauvais identifiant ou mot de passe');
+        }
+    }
+    else {
+        throw new Exception('Identifiant incorrect.');
+    }
+}
+
+function connection($pseudo, $password)
+{
+    $userManager = new Gaetan\P4\Model\UserManager();
+
+    if ($userManager->pseudoExists($pseudo)) {
+        $user = $userManager->getUser($pseudo);
+
+        $isPasswordCorrect = password_verify($password, $user->password());
+
+        if ($isPasswordCorrect) {
+            $_SESSION['user_id'] = $user->id();
+            $_SESSION['pseudo'] = $pseudo;
+            $_SESSION['role'] = $user->role();
+            $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
+            header('Location: ' . $referer);
+        }
+        else {
+            throw new Exception('Mauvais identifiant ou mot de passe 2 ');
+        }
+    }
+    else {
+        throw new Exception('Mauvais identifiant ou mot de passe 1');
     }
 }
 
@@ -233,7 +290,7 @@ function deletePost($userId, $postId)
 }
 
 
-function ignore($commentId)
+function ignoreComment($commentId)
 {
     $commentManager = new Gaetan\P4\Model\CommentManager();
     if ($commentManager->exists($commentId))
@@ -282,5 +339,29 @@ function deleteReported($commentId)
     }
     else {
         throw new Exception('Aucun identifiant de billet envoyé');
+    }
+}
+
+function deleteUser($userId)
+{
+    $userManager = new Gaetan\P4\Model\UserManager();
+    if ($userManager->exists($userId)) {
+        if ($userId != $_SESSION['user_id']) {
+            $commentManager = new Gaetan\P4\Model\CommentManager();
+            $affectedLines = $userManager->delete($userId);
+            $commentsDeleted = $commentManager->deleteUserComments($userId);
+            if ($affectedLines == false OR $commentsDeleted == false) {
+                throw new Exception('Il vous est impossible de faire cette action');
+            }
+            else {
+                header('Location: index.php?action=users_list');
+            }
+        }
+        else {
+            throw new Exception('Il vous est impossible de faire cette action');
+        }
+    }
+    else {
+        throw new Exception('Il vous est impossible de faire cette action');
     }
 }

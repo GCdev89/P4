@@ -16,13 +16,16 @@ function post($postId)
 {
     $postManager = new Gaetan\P4\Model\PostManager();
     $commentManager = new Gaetan\P4\Model\CommentManager();
-    $reportManager = new Gaetan\P4\Model\ReportManager();
+    if ($postManager->exists($postId)) {
+        $post = $postManager->getPost($postId);
+        $comments = $commentManager->getListComments($postId);
 
-    $post = $postManager->getPost($postId);
-    $comments = $commentManager->getListComments($postId);
-    //$reports = $reportManager->getListReports();
+        require('view/frontoffice/postView.php');
+    }
+    else {
+        throw new Exception('Identifiant incorrect.');
+    }
 
-    require('view/frontoffice/postView.php');
 }
 
 function getByType($type)
@@ -55,6 +58,18 @@ function updateComment($commentId, $userId)
         else {
             throw new Exception('Identifiant incorrect.');
         }
+    }
+    else {
+        throw new Exception('Identifiant incorrect.');
+    }
+}
+
+function userProfile($userId)
+{
+    $userManager = new Gaetan\P4\Model\UserManager();
+    if ($userManager->exists($userId)) {
+        $user = $userManager->getUser($userId);
+        require('view/frontoffice/userProfileView.php');
     }
     else {
         throw new Exception('Identifiant incorrect.');

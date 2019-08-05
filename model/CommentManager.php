@@ -102,6 +102,14 @@ class CommentManager extends Manager
         return $affectedLines;
     }
 
+    public function deleteUserComments($userId)
+    {
+        $q = $this->_db->prepare('DELETE FROM comment WHERE user_id = :user_id');
+        $commentsDeleted = $q->execute(array('user_id' => $userId));
+
+        return $commentsDeleted;
+    }
+
     public function exists($data)
     {
         $q = $this->_db->prepare('SELECT COUNT(*) FROM comment WHERE id = :id');

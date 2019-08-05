@@ -29,8 +29,8 @@ class UserManager extends Manager
     {
         if (is_int($info))
         {
-            $q = $this->_db->prepare('SELECT id, role, name, forname, mail, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM user WHERE id = :id');
-            $q->execute(array('id' => $userId));
+            $q = $this->_db->prepare('SELECT id, role, pseudo, password, mail, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin\') AS date FROM user WHERE id = :id');
+            $q->execute(array('id' => $info));
             $data = $q->fetch();
 
             $user = new User($data);
@@ -66,13 +66,54 @@ class UserManager extends Manager
         return $users;
     }
 
+    public function updateMail(User $user)
+    {
+        $q = $this->_db->prepare('UPDATE user SET mail = :mail WHERE id = :id');
+        $affectedLines = $q->execute(array(
+            'mail' => $user->mail(),
+            'id' => $user->id()
+        ));
+        return $affectedLines;
+    }
+
+    public function updatePassword(User $user)
+    {
+        $q = $this->_db->prepare('UPDATE user SET password = :password WHERE id = :id');
+        $affectedLines = $q->execute(array(
+            'password' => $user->password(),
+            'id' => $user->id()
+        ));
+        return $affectedLines;
+    }
+
+    public function delete($userId)
+    {
+        $q = $this->_db->prepare('DELETE FROM user WHERE id = :id');
+        $affectedLines = $q->execute(array('id' => $userId));
+
+        return $affectedLines;
+    }
+
     public function exists($data)
+    {
+        $q = $this->_db->prepare('SELECT COUNT(*) FROM user WHERE id = :id');
+        $q->execute(array('id' => $data));
+        return (bool) $q->fetchColumn();
+    }
+
+    public function pseudoExists($data)
     {
         $q = $this->_db->prepare('SELECT COUNT(*) FROM user WHERE pseudo = :pseudo');
         $q->execute(array('pseudo' => $data));
         return (bool) $q->fetchColumn();
     }
 
+    public function mailExists($data)
+    {
+        $q = $this->_db->prepare('SELECT COUNT(*) FROM user WHERE mail = :mail');
+        $q->execute(array('mail' => $data));
+        return (bool) $q->fetchColumn();
+    }
 
     public function setDb()
     {

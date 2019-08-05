@@ -1,7 +1,7 @@
 <?php ob_start(); ?>
 <?php if (isset($_SESSION['role'])): ?>
     <?php if ($_SESSION['role'] == 'admin'): ?>
-        <div class="col-1 fixed-top mt-5 p-3 navbar-dark bg-dark">
+        <div id="admin_bar" class="col-1 fixed-top p-3 navbar-dark bg-dark">
             <h4 class="h5 text-light">Administration</h4>
             <ul class="navbar-nav">
                 <li class="nav-item"><a href="index.php?action=new" class="nav-link">Nouveau billet</a></li>

@@ -1,6 +1,5 @@
 <?php
-$title = "Erreur";
-$h1 = 'Erreur'
+$h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska</h1>';
 ?>
 
 

@@ -38,9 +38,9 @@ try {
             }
             elseif ($_GET['sent'] == 'yes')
             {
-                if (!empty($_POST['pseudo']) && !empty($_POST['mail']) && !empty($_POST['password']) && !empty($_POST['confirm_pass']))
+                if (!empty($_POST['pseudo']) && !empty($_POST['mail']) && !empty($_POST['password']) && !empty($_POST['confirm_password']))
                 {
-                    if ($_POST['password'] == $_POST['confirm_pass'])  {
+                    if ($_POST['password'] == $_POST['confirm_password'])  {
                         addUser($_POST['pseudo'], $_POST['password'], $_POST['mail']);
                     }
                     else
@@ -136,6 +136,35 @@ try {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
         }
+        elseif ($_GET['action'] == 'user_profile') {
+            if (isset($_SESSION['user_id'])) {
+                userProfile($_SESSION['user_id']);
+            }
+            else {
+                throw new Exception('Vous n\'êtes pas connecté.');
+            }
+        }
+        elseif ($_GET['action'] == 'update_mail') {
+            if (isset($_SESSION['user_id']) && !empty($_POST['mail']) && !empty($_POST['password'])) {
+                updateMail($_SESSION['user_id'], $_POST['mail'], $_POST['password']);
+            }
+            else {
+                throw new Exception('Merci de vérifier les informations que vous avez saisi.');
+            }
+        }
+        elseif ($_GET['action'] == 'update_password') {
+            if (isset($_SESSION['user_id']) && !empty($_POST['password']) && !empty($_POST['new_password']) && !empty($_POST['confirm_new_password'])) {
+                if ($_POST['new_password'] == $_POST['confirm_new_password']) {
+                    updatePassword($_SESSION['user_id'], $_POST['password'], $_POST['new_password']);
+                }
+                else {
+                    throw new Exception('Merci de vérifier les informations que vous avez saisi.');
+                }
+            }
+            else {
+                throw new Exception('Merci remplir tous les champs.');
+            }
+        }
         elseif (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
             if ($_GET['action'] == 'new') {
                 newPost();
@@ -195,7 +224,7 @@ try {
             }
             elseif ($_GET['action'] == 'ignore') {
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    ignore($_GET['id']);
+                    ignoreComment($_GET['id']);
                 }
                 else {
                     throw new Exception('Aucun identifiant de billet envoyé');
@@ -211,6 +240,14 @@ try {
             }
             elseif ($_GET['action'] == 'users_list') {
                 usersList();
+            }
+            elseif ($_GET['action'] == "delete_user") {
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    deleteUser($_GET['id']);
+                }
+            }
+            else {
+                listPosts();
             }
         }
         else {

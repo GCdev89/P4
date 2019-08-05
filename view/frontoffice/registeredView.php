@@ -1,6 +1,5 @@
 <?php
-$title = 'Blog Listes des billets';
-$h1 = 'Vous êtes inscrit'
+$h1 = '<h1 class="display-5  font-italic text-dark">Billet simple pour l\'Alaska</h1>';
 ?>
 
 <?php ob_start(); ?>
@@ -11,5 +10,7 @@ $h1 = 'Vous êtes inscrit'
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('view/frontoffice/navbar.php'); ?>
-<?php require('template.php'); ?>
+<?php
+require('view/frontoffice/navbar.php');
+require('view/backoffice/adminBar.php');
+require('template.php');
