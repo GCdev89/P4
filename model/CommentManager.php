@@ -45,7 +45,7 @@ class CommentManager extends Manager
         INNER JOIN comment c
             ON c.user_id = u.id
         WHERE c.post_id = :post_id
-        ORDER BY date DESC');
+        ORDER BY c.date DESC');
         $q->execute(array('post_id' => $postId));
         while($data = $q->fetch())
         {
@@ -55,7 +55,7 @@ class CommentManager extends Manager
         return $comments;
     }
 
-    public function getReportedList()
+    public function getReportedList($start, $reportsByPage)
     {
         $comments = [];
 
@@ -64,7 +64,9 @@ class CommentManager extends Manager
         INNER JOIN comment c
             ON c.user_id = u.id
         WHERE c.report = 1
-        ORDER BY date ASC');
+        ORDER BY c.date ASC
+        LIMIT '. $start . ', ' . $reportsByPage);
+
         while($data = $q->fetch())
         {
             $comments[] = new Comment($data);

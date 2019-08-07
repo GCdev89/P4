@@ -7,8 +7,21 @@ require_once('model/UserManager.php');
 function listPosts()
 {
     $postManager = new Gaetan\P4\Model\PostManager();
-    $posts = $postManager->getListPosts();
+    $postCount = $postManager->count();
+    $postsByPage = 3;
+    $countPages = ceil($postCount / $postsByPage);
+    if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) {
+        $currentPage = intval($_GET['page']);
+    }
+    else {
+        $currentPage = 1;
+    }
+    $start = ($currentPage - 1) * $postsByPage;
+    $posts = $postManager->getListPosts($start, $postsByPage);
+    $action = 'list_posts';
+    $isActive = 'home';
 
+    require('view/frontoffice/pagination.php');
     require('view/frontoffice/listPostsView.php');
 }
 
@@ -31,8 +44,22 @@ function post($postId)
 function getByType($type)
 {
     $postManager = new Gaetan\P4\Model\PostManager();
-    $posts = $postManager->getPostsByType($type);
 
+    $postCount = $postManager->countByType($type);
+    $postsByPage = 3;
+    $countPages = ceil($postCount / $postsByPage);
+    if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) {
+        $currentPage = intval($_GET['page']);
+    }
+    else {
+        $currentPage = 1;
+    }
+    $start = ($currentPage - 1) * $postsByPage;
+    $posts = $postManager->getPostsByType($type, $start, $postsByPage);
+    $action = 'list_posts';
+    $isActive = $type;
+
+    require('view/frontoffice/paginationByType.php');
     require('view/frontoffice/listPostsView.php');
 }
 
@@ -79,16 +106,56 @@ function userProfile($userId)
 
 function newPost()
 {
+    $isActive = 'newPost';
     require('view/backoffice/newPostView.php');
 }
 
 function updateListPosts()
 {
     $postManager = new Gaetan\P4\Model\PostManager();
-    $posts = $postManager->getListPosts();
+    $postCount = $postManager->count();
+    $postsByPage = 3;
+    $countPages = ceil($postCount / $postsByPage);
+    if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) {
+        $currentPage = intval($_GET['page']);
+    }
+    else {
+        $currentPage = 1;
+    }
+    $start = ($currentPage - 1) * $postsByPage;
+    $posts = $postManager->getListPosts($start, $postsByPage);
+    $isActive = 'update_list_posts';
+    $action = 'list_posts';
+    $isTypeActive = 'all';
 
-    require('view/backoffice/updateListPostView.php');
+    require('view/frontoffice/pagination.php');
+    require('view/backoffice/updateListPostsView.php');
 
+}
+
+function getByTypeUpdate($type)
+{
+    $postManager = new Gaetan\P4\Model\PostManager();
+
+    $postCount = $postManager->countByType($type);
+    $postsByPage = 3;
+    $countPages = ceil($postCount / $postsByPage);
+    if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) {
+        $currentPage = intval($_GET['page']);
+    }
+    else {
+        $currentPage = 1;
+    }
+    $start = ($currentPage - 1) * $postsByPage;
+    $posts = $postManager->getPostsByType($type, $start, $postsByPage);
+    $action = 'update_list_posts';
+
+    $isActive = 'update_list_posts';
+    $isTypeActive = $type;
+
+
+    require('view/frontoffice/paginationByType.php');
+    require('view/backoffice/updateListPostsView.php');
 }
 
 function updatePost($id)
@@ -108,15 +175,44 @@ function moderation()
 {
     $commentManager = new Gaetan\P4\Model\CommentManager();
     $reportCount = $commentManager->countReport();
-    $comments = $commentManager->getReportedList();
+    $reportsByPage = 20;
+    $countPages = ceil($reportCount / $reportsByPage);
 
+    if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) {
+        $currentPage = intval($_GET['page']);
+    }
+    else {
+        $currentPage = 1;
+    }
+    $start = ($currentPage - 1) * $reportsByPage;
+
+    $comments = $commentManager->getReportedList($start, $reportsByPage);
+    $action = 'moderation';
+    $isActive = 'moderation';
+
+    require('view/frontoffice/pagination.php');
     require('view/backoffice/moderationView.php');
 }
 
 function usersList()
 {
     $userManager = new Gaetan\P4\Model\UserManager();
-    $users = $userManager->getListUsers();
+    $usersCount =$userManager->count();
+    $usersByPage = 20;
+    $countPages = ceil($usersCount / $usersByPage);
 
+    if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) {
+        $currentPage = intval($_GET['page']);
+    }
+    else {
+        $currentPage = 1;
+    }
+    $start = ($currentPage - 1) * $usersByPage;
+    $users = $userManager->getListUsers($start, $usersByPage);
+
+    $action = 'users_list';
+    $isActive = 'users';
+
+    require('view/frontoffice/pagination.php');
     require('view/backoffice/listUsersView.php');
 }

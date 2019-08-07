@@ -1,25 +1,19 @@
-<?php
-$h1 = '<h1 class="display-5  font-italic text-dark">Billet simple pour l\'Alaska</h1>';
-
-?>
-
 <?php ob_start(); ?>
 <div class="row mt-3 mx-auto px-auto">
-        <p><a href="index.php">Retour à la liste des billets</a></p>
-        <div class="col-12 my-auto post">
-            <div class="row d-flex justify-content-between bg-info text-light rounded-top">
-                <p class="m-2"><span class="h4"><?= htmlspecialchars($post->title()) ?></span>  par : <?=htmlspecialchars($post->userPseudo()) ?>, le : <?= htmlspecialchars($post->date()) ?> </p>
-                <p class="badge badge-dark m-2 p-2"><?= $post->type()?></p>
-            </div>
-            <div class="row">
-                <div class="post_content_overlay col-12 p-0">
-                    <div class="m-2 post_content" ><?= $post->content() ?></div>
-                </div>
+    <p><a href="index.php">Retour à la liste des billets</a></p>
+    <div class="col-12 my-auto post">
+        <div class="row d-flex justify-content-between bg-info text-light rounded-top">
+            <p class="m-2"><span class="h4"><?= htmlspecialchars($post->title()) ?></span>  par : <?=htmlspecialchars($post->userPseudo()) ?>, le : <?= htmlspecialchars($post->date()) ?> </p>
+            <p class="badge badge-dark m-2 p-2"><?= $post->type()?></p>
+        </div>
+        <div class="row">
+            <div class="post_content_overlay col-12 p-0">
+                <div class="m-2 post_content" ><?= $post->content() ?></div>
             </div>
         </div>
-    <h2 class="mt-4 mb-5">Commentaires</h2>
-
-    <div class="row">
+    </div>
+    <div class="row mx-auto">
+        <h2 class="mt-4 mb-5">Commentaires</h2>
     <?php foreach ($comments as $aComment): ?>
         <div class="col-11 mx-auto my-2">
             <div class="row d-flex justify-content-between bg-secondary text-light rounded-top">

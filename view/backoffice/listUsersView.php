@@ -11,7 +11,7 @@ $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska<
                 <th scope="col">Role</th>
                 <th scope="col">Mail</th>
                 <th scope="col">Date de création</th>
-                <th scope="col">Action</th>                
+                <th scope="col">Action</th>
             </thead>
             <tbody>
                 <?php foreach ($users as $user): ?>
@@ -28,6 +28,9 @@ $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska<
             </tbody>
         </table>
     </div>
+    <?php if (isset($countPages)): ?>
+        <?= $pagination ?>
+    <?php endif; ?>
 </div>
 <?php $content = ob_get_clean(); ?>
 <?php

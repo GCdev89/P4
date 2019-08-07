@@ -51,11 +51,11 @@ class UserManager extends Manager
 
     }
 
-    public function getListUsers()
+    public function getListUsers($start, $usersByPage)
     {
         $users = [];
 
-        $q = $this->_db->query('SELECT id, role, pseudo, mail, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM user');
+        $q = $this->_db->query('SELECT id, role, pseudo, mail, DATE_FORMAT(date, \'%d/%m/%Y à %Hh%imin%ss\') AS date FROM user ORDER BY pseudo ASC LIMIT '. $start . ', ' . $usersByPage);
 
         while($data = $q->fetch())
         {
@@ -92,6 +92,12 @@ class UserManager extends Manager
         $affectedLines = $q->execute(array('id' => $userId));
 
         return $affectedLines;
+    }
+
+    public function count()
+    {
+        $q = $this->_db->query('SELECT COUNT(id) FROM user');
+        return $usersCount = $q->fetchColumn();
     }
 
     public function exists($data)

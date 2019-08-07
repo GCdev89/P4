@@ -40,22 +40,27 @@ function updateMail($userId, $mail, $password)
 {
     $userManager = new Gaetan\P4\Model\UserManager();
     if ($userManager->exists($userId)) {
-        $user = $userManager->getUser($userId);
-        $isPasswordCorrect = password_verify($password, $user->password());
+        if (!$userManager->mailExists($mail)) {
+            $user = $userManager->getUser($userId);
+            $isPasswordCorrect = password_verify($password, $user->password());
 
-        if ($isPasswordCorrect) {
-            $data = ['id' => $userId, 'mail' => $mail];
-            $userUpdated = new Gaetan\P4\Model\User($data);
-            $affectedLines = $userManager->updateMail($userUpdated);
-            if ($affectedLines == false) {
-                throw new Exception('Impossible de modifier le mail.');
+            if ($isPasswordCorrect) {
+                $data = ['id' => $userId, 'mail' => $mail];
+                $userUpdated = new Gaetan\P4\Model\User($data);
+                $affectedLines = $userManager->updateMail($userUpdated);
+                if ($affectedLines == false) {
+                    throw new Exception('Impossible de modifier le mail.');
+                }
+                else {
+                    header('Location: index.php?action=user_profile');
+                }
             }
             else {
-                header('Location: index.php?action=user_profile');
+                throw new Exception('Mauvais identifiant ou mot de passe');
             }
         }
         else {
-            throw new Exception('Mauvais identifiant ou mot de passe');
+            throw new Exception('Ces identifiants ne sont pas disponnibles, merci d\'en choisir un autre ');
         }
     }
     else {

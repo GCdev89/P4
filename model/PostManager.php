@@ -53,7 +53,7 @@ class PostManager extends Manager
         return $post;
     }
 
-    public function getListPosts()
+    public function getListPosts($start, $postsByPage)
     {
         $posts = [];
 
@@ -61,7 +61,8 @@ class PostManager extends Manager
         FROM user u
         INNER JOIN post p
             ON p.user_id = u.id
-        ORDER BY date DESC');
+        ORDER BY p.date DESC
+        LIMIT '. $start . ', ' . $postsByPage);
 
         while($data = $q->fetch())
         {
@@ -72,7 +73,7 @@ class PostManager extends Manager
         return $posts;
     }
 
-    public function getPostsByType($type)
+    public function getPostsByType($type, $start, $postsByPage)
     {
         $posts = [];
 
@@ -81,7 +82,8 @@ class PostManager extends Manager
         INNER JOIN post p
             ON p.user_id = u.id
         WHERE p.type = :type
-        ORDER BY date DESC');
+        ORDER BY p.date DESC
+        LIMIT '. $start . ', ' . $postsByPage);
 
         $q->execute(array('type' => $type));
         while($data = $q->fetch())
@@ -99,6 +101,20 @@ class PostManager extends Manager
         $affectedLines = $q->execute(array('id' => $postId));
 
         return $affectedLines;
+    }
+
+    public function count()
+    {
+        $q = $this->_db->query('SELECT COUNT(id) FROM post');
+        return $postCount = $q->fetchColumn();
+    }
+
+    public function countByType($type)
+    {
+        $q = $this->_db->prepare('SELECT COUNT(type) FROM post WHERE type = :type');
+        $q->execute(array('type' => $type));
+
+        return $postCount = $q->fetchColumn();
     }
 
     public function exists($data)

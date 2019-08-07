@@ -29,6 +29,9 @@ $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska<
             <?php endif; ?>
         </tbody>
     </table>
+    <?php if (isset($countPages)): ?>
+        <?= $pagination ?>
+    <?php endif; ?>
 </div>
 <?php $content = ob_get_clean(); ?>
 <?php

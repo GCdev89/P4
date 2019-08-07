@@ -1,6 +1,6 @@
 <?php
 $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska</h1>';
-$registerScript = '<script src="public/js/controlRegistration.js"></script>';
+$controlScript = '<script src="public/js/controlRegistration.js"></script>';
 ?>
 
 <?php ob_start(); ?>

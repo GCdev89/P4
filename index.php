@@ -6,19 +6,7 @@ try {
     session_start();
 
     if (isset($_GET['action'])) {
-        if ($_GET['action'] == 'listPosts') {
-            listPosts();
-        }
-        elseif ($_GET['action'] == 'post')
-        {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                post($_GET['id']);
-            }
-            else {
-                throw new Exception('Aucun idenditifiant de billet envoyé');
-            }
-        }
-        elseif ($_GET['action'] == 'getByType') {
+        if ($_GET['action'] == 'list_posts') {
             if (isset($_GET['type'])) {
                 if ($_GET['type'] == 'chapter' OR $_GET['type'] == 'announcement' OR $_GET['type'] == 'general') {
                     getByType($_GET['type']);
@@ -29,6 +17,15 @@ try {
             }
             else {
                 listPosts();
+            }
+        }
+        elseif ($_GET['action'] == 'post')
+        {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                post($_GET['id']);
+            }
+            else {
+                throw new Exception('Aucun idenditifiant de billet envoyé');
             }
         }
         elseif ($_GET['action'] == 'registration')
@@ -182,8 +179,18 @@ try {
                     throw new Exception('Merci de remplir tous les champs.');
                 }
             }
-            elseif ($_GET['action'] == 'updateListPosts') {
-                updateListPosts();
+            elseif ($_GET['action'] == 'update_list_posts') {
+                if (isset($_GET['type'])) {
+                    if ($_GET['type'] == 'chapter' OR $_GET['type'] == 'announcement' OR $_GET['type'] == 'general') {
+                        getByTypeUpdate($_GET['type']);
+                    }
+                    else {
+                        updateListPosts();
+                    }
+                }
+                else {
+                    updateListPosts();
+                }
             }
             elseif ($_GET['action'] == 'updatePost') {
                 if (isset($_GET['id']) && $_GET['id'] > 0) {

@@ -1,5 +1,6 @@
 <?php
 $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska</h1>';
+$controlScript = '<script src="public/js/controlUpdate.js"></script>';
 ?>
 
 <?php ob_start(); ?>
@@ -22,9 +23,9 @@ $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska<
         </table>
     </div>
     <div class="row mt-3 mx-auto px-auto">
-        <div class="col-md-4 mr-4">
+        <div class="col-md-3 mr-4">
             <h3>Modifier votre mail</h3>
-            <form class="form ml-2" action="index.php?action=update_mail" method="post" >
+            <form id="mail_update" class="form ml-2" action="index.php?action=update_mail" method="post" >
                 <div class="form-group">
                     <input class="form-control mr-2" type="mail" name="mail" placeholder="Nouveau mail"/>
                 </div>
@@ -37,9 +38,17 @@ $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska<
                 </div>
             </form>
         </div>
-        <div class="col-md-4 ml-4">
+        <div id="registrationHelp" class="col-md-3 mt-5 mx-auto mb-5 pb-3 px-auto bg-light rounded">
+            <p class="h5 mt-2 mb-3">Pour mettre à jour vos données vous devez :</p>
+            <ul class="list-group">
+                <li id="updateMailHelp" class="list-group-item">Renseigner une adresse mail valide</li>
+                <li id="updatePasswordHelp" class="list-group-item">Renseigner un mot de passe compris entre 8 et 14 caractères</li>
+                <li id="verifPasswordHelp" class="list-group-item">Vérifier le mot de passe</li>
+            </ul>
+        </div>
+        <div class="col-md-3 ml-4">
             <h3>Modifier votre mot de passe</h3>
-            <form class="form ml-2" action="index.php?action=update_password" method="post" >
+            <form id="password_update" class="form ml-2" action="index.php?action=update_password" method="post" >
                 <div class="form-group">
                     <input class="form-control mr-2" type="password" name="password" placeholder="Mot de passe" />
                 </div>
