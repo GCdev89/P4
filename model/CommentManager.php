@@ -36,7 +36,7 @@ class CommentManager extends Manager
         return $comment;
     }
 
-    public function getListComments($postId)
+    public function getListComments($postId, $start, $commentsByPage)
     {
         $comments = [];
 
@@ -45,7 +45,8 @@ class CommentManager extends Manager
         INNER JOIN comment c
             ON c.user_id = u.id
         WHERE c.post_id = :post_id
-        ORDER BY c.date DESC');
+        ORDER BY c.date DESC
+        LIMIT '. $start . ', ' . $commentsByPage);
         $q->execute(array('post_id' => $postId));
         while($data = $q->fetch())
         {
@@ -117,6 +118,16 @@ class CommentManager extends Manager
         $q = $this->_db->prepare('SELECT COUNT(*) FROM comment WHERE id = :id');
         $q->execute(array('id' => $data));
         return (bool) $q->fetchColumn();
+    }
+
+    public function count()
+    {
+        $q = $this->_db->query('SELECT COUNT(*) AS count FROM comment');
+        $data = $q->fetch();
+        $q->closeCursor();
+        $commentsCount = $data['count'];
+
+        return $commentsCount;
     }
 
     public function countReport()

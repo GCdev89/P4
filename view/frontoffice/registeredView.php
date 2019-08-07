@@ -3,7 +3,7 @@ $h1 = '<h1 class="display-5  font-italic text-dark">Billet simple pour l\'Alaska
 ?>
 
 <?php ob_start(); ?>
-<div class="col-4 mx-auto px-auto">
+<div class="col-lg-4 mx-auto px-auto bg-light rounded">
     <p>Bienvenue sur le blog <?= $_SESSION['pseudo'] ?></p>
     <p>Cliquez pour revenir à la <a href="index.php">liste des articles</a>.</p>
 </div>

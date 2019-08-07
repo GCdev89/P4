@@ -31,8 +31,22 @@ function post($postId)
     $commentManager = new Gaetan\P4\Model\CommentManager();
     if ($postManager->exists($postId)) {
         $post = $postManager->getPost($postId);
-        $comments = $commentManager->getListComments($postId);
 
+        $commentsCount = $commentManager->count();
+        $commentsByPage = 10;
+        $countPages = ceil($commentsCount / $commentsByPage);
+        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) {
+            $currentPage = intval($_GET['page']);
+        }
+        else {
+            $currentPage = 1;
+        }
+        $start = ($currentPage - 1) * $commentsByPage;
+
+        $comments = $commentManager->getListComments($postId, $start, $commentsByPage);
+        $action = 'post';
+
+        require('view/frontoffice/pagination.php');
         require('view/frontoffice/postView.php');
     }
     else {
@@ -125,7 +139,7 @@ function updateListPosts()
     $start = ($currentPage - 1) * $postsByPage;
     $posts = $postManager->getListPosts($start, $postsByPage);
     $isActive = 'update_list_posts';
-    $action = 'list_posts';
+    $action = 'update_list_posts';
     $isTypeActive = 'all';
 
     require('view/frontoffice/pagination.php');

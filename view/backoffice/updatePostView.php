@@ -1,9 +1,5 @@
-<?php
-$h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska</h1>';
-?>
-
 <?php ob_start(); ?>
-<div class="row col-12">
+<div class="row col-lg-12 mx-auto">
     <p><a href="index.php?action=updateListPost">Retour à la liste des billets</a></p>
 
     <form action="index.php?action=updatedPost&amp;id=<?= htmlspecialchars($post->id()) ?>" method="post" class="col-12 mx-auto mb-5 p-auto bg-dark text-light rounded">

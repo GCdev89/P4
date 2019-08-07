@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="utf-8" />
         <title>Billet simple pour l\'Alaska</title>
@@ -7,7 +7,8 @@
         <script src="public/tinymce/tinymce.js" referrerpolicy="origin"></script>
         <script>
         tinymce.init({
-          selector: '#content'
+            language : "fr_FR",
+            selector: '#content'
         });
         </script>
 
@@ -17,12 +18,11 @@
 
     <body>
 
-        <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
-            <?= $nav ?>
-        </nav>
-        <div class="container-fluid">
+        <?= $nav ?>
+
+        <div class="container-fluid mb-5">
             <div class="row">
-                <?= $adminBar ?>
+
                 <div class="jumbotron mx-auto mt-4 px-auto">
                     <div class="container">
                         <h1 class="display-5  font-italic text-warning">Billet simple pour l'Alaska</h1>
@@ -30,13 +30,15 @@
                 </div>
 
 
-                <div class="row col-md-12">
-                    <div class="col-md-8 mx-auto">
+                <div class="row col-lg-12 mx-0 px-0 mx-md-auto">
+                    <div class="col-lg-8 mx-0 mx-md-auto">
                             <?= $content ?>
                     </div>
                 </div>
             </div>
         </div>
+        <?= $adminBar ?>
+
         <?php if (isset($controlScript)) {
             echo $controlScript;
         } ?>

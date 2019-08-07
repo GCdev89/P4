@@ -3,11 +3,11 @@ $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska<
 ?>
 
 <?php ob_start(); ?>
-<div class="row col-12">
+<div class="row col-12 mx-auto px-0">
     <div class="col-12 mx-auto my-2 bg-dark text-light">
         <p>Commentaires à modérer  <span class="badge badge-warning"><?= $reportCount ?></span></p>
     </div>
-    <table class="table table-striped table-dark">
+    <table class="table table-responsive-md table-striped table-dark">
         <thead>
             <th scope="col">Auteur</th>
             <th scope="col">Titre du commentaire</th>

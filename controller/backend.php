@@ -113,11 +113,11 @@ function connection($pseudo, $password)
             header('Location: ' . $referer);
         }
         else {
-            throw new Exception('Mauvais identifiant ou mot de passe 2 ');
+            throw new Exception('Mauvais identifiant ou mot de passe');
         }
     }
     else {
-        throw new Exception('Mauvais identifiant ou mot de passe 1');
+        throw new Exception('Mauvais identifiant ou mot de passe');
     }
 }
 

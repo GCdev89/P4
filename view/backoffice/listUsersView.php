@@ -5,7 +5,7 @@ $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska<
 <?php ob_start(); ?>
 <div class="col-12 mx-auto px-auto">
     <div class="row">
-        <table class="table table-striped table-dark">
+        <table class="table table-responsive-md table-striped table-dark">
             <thead>
                 <th scope="col">Pseudo</th>
                 <th scope="col">Role</th>
