@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8" />
-        <title>Billet simple pour l\'Alaska</title>
+        <title>Billet simple pour l'Alaska</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="public/tinymce/tinymce.js" referrerpolicy="origin"></script>
         <script>
@@ -22,14 +22,11 @@
 
         <div class="container-fluid mb-5">
             <div class="row">
-
                 <div class="jumbotron mx-auto mt-4 px-auto">
                     <div class="container">
-                        <h1 class="display-5  font-italic text-warning">Billet simple pour l'Alaska</h1>
+                        <h1 class="display-5  font-italic "><a href="index.php" class="text-warning text-decoration-none">Billet simple pour l'Alaska</a></h1>
                     </div>
                 </div>
-
-
                 <div class="row col-lg-12 mx-0 px-0 mx-md-auto">
                     <div class="col-lg-8 mx-0 mx-md-auto">
                             <?= $content ?>
@@ -37,7 +34,10 @@
                 </div>
             </div>
         </div>
-        <?= $adminBar ?>
+        <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+            <?= $adminBar ?>
+        <?php endif; ?>
+
 
         <?php if (isset($controlScript)) {
             echo $controlScript;

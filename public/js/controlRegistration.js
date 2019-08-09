@@ -1,3 +1,7 @@
+/*
+* This script control if users enter proper values in register form and prevent to send if the inputs doesn't verify the conditions
+*/
+
 let register = document.getElementById("register");
 let registrationPseudo = document.getElementById("registrationPseudo");
 let registrationMail = document.getElementById("registrationMail");
@@ -5,7 +9,7 @@ let registrationPassword = document.getElementById("registrationPassword");
 let registrationVerifPassword = document.getElementById("registrationVerifPassword");
 
 
-let mailRegex = /^[a-z0-9._-\.]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
+let mailRegex = /^[a-z0-9.\._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
 
 
 register.addEventListener("submit", function(e){

@@ -1,10 +1,15 @@
+/*
+* This script control if users enter proper values in update forms and prevent to send if the inputs doesn't verify the conditions
+*/
+
+
 let mailUpdate = document.getElementById("mail_update");
 let passwordUpdate = document.getElementById("password_update");
 let updateMailHelp = document.getElementById("updateMailHelp");
 let updatePasswordHelp = document.getElementById("updatePasswordHelp");
 let verifPasswordHelp = document.getElementById("verifPasswordHelp");
 
-let mailRegex = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
+let mailRegex = /^[a-z0-9.\._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
 
 
 mailUpdate.addEventListener("submit", function(e){

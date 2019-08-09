@@ -6,6 +6,9 @@ require_once('model/Post.php');
 
 class PostManager extends Manager
 {
+    /**
+    *@var PDO $_db
+    */
     private $_db;
 
     public function __construct()

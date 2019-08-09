@@ -1,12 +1,8 @@
-<?php
-$h1 = '<h1 class="display-5  font-italic text-dark">Billet simple pour l\'Alaska</h1>';
-?>
-
 <?php ob_start(); ?>
 <div class="row col-12 mx-auto px-auto">
     <div class="row col-12 mt-4">
         <p><a href="index.php?action=post&amp;id=<?= htmlspecialchars($comment->postId()); ?>">Retour au billet</a></p>
-        <form action="index.php?action=comment_updated&amp;id=<?= $comment->postId(); ?>&amp;id_comment=<?= $comment->id(); ?>" method="post" class="col-12 mx-auto mb-5 p-auto bg-light">
+        <form action="index.php?action=comment_updated&amp;id=<?= htmlspecialchars($comment->postId()); ?>&amp;id_comment=<?= $comment->id(); ?>" method="post" class="col-12 mx-auto mb-5 p-auto bg-light">
             <div class="form-group" >
                 <label for="title">Titre du commentaire</label><br />
                 <input type="text" id="title" name="title" value="<?= htmlspecialchars($comment->title()); ?>" class="form-control" />
@@ -25,6 +21,6 @@ $h1 = '<h1 class="display-5  font-italic text-dark">Billet simple pour l\'Alaska
 
 <?php $content = ob_get_clean(); ?>
 <?php
-require('view/frontoffice/navbar.php');
+require('view/navbar.php');
 require('view/backoffice/adminBar.php');
 require('template.php');

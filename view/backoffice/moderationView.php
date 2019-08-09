@@ -1,7 +1,3 @@
-<?php
-$h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska</h1>';
-?>
-
 <?php ob_start(); ?>
 <div class="row col-12 mx-auto px-0">
     <div class="col-12 mx-auto my-2 bg-dark text-light">
@@ -29,12 +25,12 @@ $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska<
             <?php endif; ?>
         </tbody>
     </table>
-    <?php if (isset($countPages)): ?>
+    <?php if (isset($countPages) && $countPages > 1): ?>
         <?= $pagination ?>
     <?php endif; ?>
 </div>
 <?php $content = ob_get_clean(); ?>
 <?php
-require('view/frontoffice/navbar.php');
+require('view/navbar.php');
 require('view/backoffice/adminBar.php');
 require('view/frontoffice/template.php');

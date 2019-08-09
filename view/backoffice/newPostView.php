@@ -1,7 +1,3 @@
-<?php
-$h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska</h1>';
-?>
-
 <?php ob_start(); ?>
 <div class="row col-lg-12 mx-auto px-0">
     <form action="index.php?action=addPost" method="post" class="col-12 mx-auto mb-5 p-auto bg-dark text-light rounded">
@@ -29,6 +25,6 @@ $h1 = '<h1 class="display-5 font-italic text-dark">Billet simple pour l\'Alaska<
 </div>
 <?php $content = ob_get_clean(); ?>
 <?php
-require('view/frontoffice/navbar.php');
+require('view/navbar.php');
 require('view/backoffice/adminBar.php');
 require('view/frontoffice/template.php');

@@ -4,7 +4,9 @@ require ('controller/backend.php');
 
 try {
     session_start();
-
+    /*
+    * Manage posts and comments view using frontend controller and backend controller to insert/update/delete from db
+    */
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'list_posts') {
             if (isset($_GET['type'])) {
@@ -28,48 +30,7 @@ try {
                 throw new Exception('Aucun idenditifiant de billet envoyé');
             }
         }
-        elseif ($_GET['action'] == 'registration')
-        {
-            if ($_GET['sent'] == 'no') {
-                registration();
-            }
-            elseif ($_GET['sent'] == 'yes')
-            {
-                if (!empty($_POST['pseudo']) && !empty($_POST['mail']) && !empty($_POST['password']) && !empty($_POST['confirm_password']))
-                {
-                    if ($_POST['password'] == $_POST['confirm_password'])  {
-                        addUser($_POST['pseudo'], $_POST['password'], $_POST['mail']);
-                    }
-                    else
-                    {
-                        throw new Exception('Merci de confirmer le mot de passe.');
-                    }
-                }
-                else {
-                    throw new Exception('Veuillez remplir les informations requises pour l\'inscription');
-                }
-            }
-            else {
-                registration();
-            }
-        }
-        elseif ($_GET['action'] == 'registered') {
-            registered();
-        }
-        elseif ($_GET['action'] == 'connect') {
-            if (!empty($_POST['pseudo']) && !empty($_POST['password']))
-            {
-                connection($_POST['pseudo'], $_POST['password']);
-            }
-            else
-            {
-                throw new Exception('Merci de renseigner un pseudo et un mot de passe valide.');
-            }
-        }
-        elseif ($_GET['action'] == 'disconnect')
-        {
-            disconnect();
-        }
+        // Will use backend controller to manage db
         elseif ($_GET['action'] == 'addComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!empty($_POST['title']) && !empty($_SESSION['user_id']) && !empty($_POST['content'])) {
@@ -133,6 +94,51 @@ try {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
         }
+        /*
+        * User management using controller frontend to set up the views and backend for insert to db
+        */
+        elseif ($_GET['action'] == 'registration')
+        {
+            if ($_GET['sent'] == 'no') {
+                registration();
+            }
+            elseif ($_GET['sent'] == 'yes')
+            {
+                if (!empty($_POST['pseudo']) && !empty($_POST['mail']) && !empty($_POST['password']) && !empty($_POST['confirm_password']))
+                {
+                    if ($_POST['password'] == $_POST['confirm_password'])  {
+                        addUser($_POST['pseudo'], $_POST['password'], $_POST['mail']);
+                    }
+                    else
+                    {
+                        throw new Exception('Merci de confirmer le mot de passe.');
+                    }
+                }
+                else {
+                    throw new Exception('Veuillez remplir les informations requises pour l\'inscription');
+                }
+            }
+            else {
+                registration();
+            }
+        }
+        elseif ($_GET['action'] == 'registered') {
+            registered();
+        }
+        elseif ($_GET['action'] == 'connect') {
+            if (!empty($_POST['pseudo']) && !empty($_POST['password']))
+            {
+                connection($_POST['pseudo'], $_POST['password']);
+            }
+            else
+            {
+                throw new Exception('Merci de renseigner un pseudo et un mot de passe valide.');
+            }
+        }
+        elseif ($_GET['action'] == 'disconnect')
+        {
+            disconnect();
+        }
         elseif ($_GET['action'] == 'user_profile') {
             if (isset($_SESSION['user_id'])) {
                 userProfile($_SESSION['user_id']);
@@ -146,7 +152,7 @@ try {
                 updateMail($_SESSION['user_id'], $_POST['mail'], $_POST['password']);
             }
             else {
-                throw new Exception('Merci de vérifier les informations que vous avez saisi.');
+                throw new Exception('Merci remplir tous les champs.');
             }
         }
         elseif ($_GET['action'] == 'update_password') {
@@ -162,6 +168,9 @@ try {
                 throw new Exception('Merci remplir tous les champs.');
             }
         }
+        /*
+        * Control session role. If admin is set up, grant privileges to admin pannel
+        */
         elseif (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
             if ($_GET['action'] == 'new') {
                 newPost();

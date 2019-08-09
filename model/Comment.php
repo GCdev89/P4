@@ -5,11 +5,12 @@ class Comment
 {
     /**
     *@var int $_id
+    *@var int $_user_id
     *@var int $_post_id
+    *@var string $_user_pseudo
     *@var string $_title
-    *@var string $_author
     *@var string $_content
-    *@var int $_report
+    *@var int $_report If $_report == 1, the comment is reported
     *@var int $_date
     */
 
@@ -40,6 +41,7 @@ class Comment
     }
 
     // Getters
+
     public function id()
     {
         return $this->_id;

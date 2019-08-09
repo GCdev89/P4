@@ -3,6 +3,16 @@ namespace Gaetan\P4\Model;
 
 class User
 {
+    /**
+    *@var int $_id
+    *@var string $_role Define the user's role. Either common_user or admin
+    *@var string $_pseudo
+    *@var string $_password
+    *@var string $_mail
+    *@var $_date_creation
+    */
+
+
     private $_id;
     private $_role;
     private $_pseudo;
@@ -28,6 +38,7 @@ class User
     }
 
     // Getters
+
     public function id()
     {
         return $this->_id;

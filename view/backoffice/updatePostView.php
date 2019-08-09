@@ -1,7 +1,5 @@
 <?php ob_start(); ?>
 <div class="row col-lg-12 mx-auto">
-    <p><a href="index.php?action=updateListPost">Retour à la liste des billets</a></p>
-
     <form action="index.php?action=updatedPost&amp;id=<?= htmlspecialchars($post->id()) ?>" method="post" class="col-12 mx-auto mb-5 p-auto bg-dark text-light rounded">
         <div class="form-group">
             <label for="type">Type de billet</label>
@@ -22,13 +20,13 @@
         </div>
         <div class="form-group d-flex justify-content-around mb-2">
             <button type="submit" class="btn btn-primary">Envoyer</button>
-            <a href="index.php?action=delete_post&amp;id=<?= $post->id()?>" class="btn btn-danger">Supprimer</a>
+            <a href="index.php?action=delete_post&amp;id=<?= htmlspecialchars($post->id())?>" class="btn btn-danger">Supprimer</a>
         </div>
     </form>
 </div>
 
 <?php $content = ob_get_clean(); ?>
 <?php
-require('view/frontoffice/navbar.php');
+require('view/navbar.php');
 require('view/backoffice/adminBar.php');
 require('view/frontoffice/template.php');

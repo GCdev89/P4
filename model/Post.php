@@ -5,9 +5,10 @@ class Post
 {
     /**
     *@var int $_id
-    *@var string $_type Define the type of tickets, either chapter, announcement or else
+    *@var string $_user_id
+    *@var string $_user_pseudo
+    *@var string $_type Define the type of posts, either chapter, announcement or general
     *@var string $_title
-    *@var string $_author
     *@var string $_content
     *@var int $_date
     */
@@ -15,8 +16,6 @@ class Post
     private $_id;
     private $_user_id;
     private $_user_pseudo;
-    private $_user_name;
-    private $_user_forname;
     private $_type;
     private $_title;
     private $_content;
@@ -40,6 +39,7 @@ class Post
     }
 
     // Getters
+    
     public function id()
     {
         return $this->_id;

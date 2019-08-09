@@ -1,7 +1,7 @@
 body
 {
-    background: url('../images/snow-1186174_1920.jpg') fixed;
-
+    background: url('../images/adventure-alaska-cold-289407.jpg') fixed;
+    background-size: 1920px 1080px;
 }
 
 #admin_bar
@@ -11,12 +11,12 @@ body
 
 .jumbotron
 {
-    background: radial-gradient(ellipse at center, rgba(20, 20, 20, 0.9), rgba(250, 250, 250, 0.2));
+    background: radial-gradient(ellipse at center, rgba(20, 20, 20, 0.9), rgba(50, 50, 50, 0.45), rgba(250, 250, 250, 0.15));
 }
 
 .post
 {
-    box-shadow:  8px 8px 8px rgb(100, 100, 100);
+    box-shadow:  4px 4px 6px rgb(50, 50, 50);
 }
 
 .post_content
@@ -31,5 +31,10 @@ body
 
 .comment_btn
 {
-    box-shadow:  4px 4px 4px rgb(100, 100, 100);
+    box-shadow:  4px 4px 6px rgb(50, 50, 50);
+}
+
+#error_message
+{
+    height: 50px;
 }

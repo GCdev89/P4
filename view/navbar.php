@@ -10,7 +10,7 @@
             <li class="nav-item pr-3 <?php if(isset($isActive) && $isActive == 'general'){echo'active';} ?>"><a class="nav-link" href="index.php?action=list_posts&amp;type=general">Général</a></li>
         </ul>
         <?php if (isset($_SESSION['user_id']) && isset($_SESSION['pseudo'])): ?>
-            <div class="text-light mr-4"><span class="badge badge-info mr-3 my-auto p-2"><a href="index.php?action=user_profile" class=" text-decoration-none text-light"><?= htmlspecialchars($_SESSION['pseudo'])?></a></span>
+            <div class="text-light mr-4"><span class="badge badge-warning mr-3 my-auto p-2"><a href="index.php?action=user_profile" class=" text-decoration-none text-dark"><?= htmlspecialchars($_SESSION['pseudo'])?></a></span>
             <a href="index.php?action=disconnect" class="my-auto btn btn-outline-danger">Déconnexion</a></div>
             <?php else: ?>
                 <form class="form-inline" action="index.php?action=connect" method="post" >

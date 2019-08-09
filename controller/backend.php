@@ -1,17 +1,21 @@
 <?php
-require_once('model/Manager.php');
+/*
+* Manage interactions with the DB, create/update/delete
+*/
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
 require_once('model/UserManager.php');
-
+/*
+* Insert & update user's info into db
+*/
 function addUser($pseudo, $password, $mail)
 {
-    $chopPass = password_hash($password, PASSWORD_DEFAULT);
-    $role = 'common_user';
+    $hashPass = password_hash($password, PASSWORD_DEFAULT);
+    $role = 'common_user'; // every new user is by default set as common_user
     $data = [
         'role' => $role,
         'pseudo' => $pseudo,
-        'password' => $chopPass,
+        'password' => $hashPass,
         'mail' => $mail
     ];
     $userManager = new Gaetan\P4\Model\UserManager();
@@ -76,8 +80,8 @@ function updatePassword($userId, $password, $newPassword)
 
         $isPasswordCorrect = password_verify($password, $user->password());
         if ($isPasswordCorrect) {
-            $chopPass = password_hash($newPassword, PASSWORD_DEFAULT);
-            $data = ['id' => $userId, 'password' => $chopPass];
+            $hashPass = password_hash($newPassword, PASSWORD_DEFAULT);
+            $data = ['id' => $userId, 'password' => $hashPass];
             $userUpdated = new Gaetan\P4\Model\User($data);
             $affectedLines = $userManager->updatePassword($userUpdated);
             if ($affectedLines == false) {
@@ -95,7 +99,9 @@ function updatePassword($userId, $password, $newPassword)
         throw new Exception('Identifiant incorrect.');
     }
 }
-
+/*
+* Manage connect/disconnect and set in $_SESSION 'role', 'pseudo', and 'id'
+*/
 function connection($pseudo, $password)
 {
     $userManager = new Gaetan\P4\Model\UserManager();
@@ -127,7 +133,9 @@ function disconnect()
     session_destroy();
     header('Location: index.php');
 }
-
+/*
+* Comment management create/update/delete/report
+*/
 function addComment($postId, $title, $userId, $content)
 {
     $data = [
@@ -157,7 +165,6 @@ function updatedComment($commentId, $userId, $title, $content)
         $comment = $commentManager->getComment($commentId);
         if ($comment->userId() == $userId) {
             $data = ['id' => $commentId,
-                    'userId' => $userId,
                     'title' => $title,
                     'content' => $content];
             $commentUpdated = new Gaetan\P4\Model\Comment($data);
@@ -228,7 +235,12 @@ function report($commentId, $userId)
         throw new Exception('Identifiant incorrect.');
     }
 }
-
+/*
+* Actions from the admin pannel
+*/
+/*
+* Posts management create/update/delete
+*/
 function addPost($userId, $type, $title, $content)
 {
     $data = ['userId' => $userId,
@@ -282,7 +294,7 @@ function deletePost($userId, $postId)
                 throw new Exception('Il vous est impossible de faire cette action');
             }
             else {
-                header('Location: index.php?action=updateListPosts');
+                header('Location: index.php?action=update_list_posts');
             }
         }
         else {
@@ -294,7 +306,9 @@ function deletePost($userId, $postId)
     }
 }
 
-
+/*
+* Moderation ignore report, delete comment reported
+*/
 function ignoreComment($commentId)
 {
     $commentManager = new Gaetan\P4\Model\CommentManager();
@@ -346,7 +360,9 @@ function deleteReported($commentId)
         throw new Exception('Aucun identifiant de billet envoyé');
     }
 }
-
+/*
+* User management
+*/
 function deleteUser($userId)
 {
     $userManager = new Gaetan\P4\Model\UserManager();

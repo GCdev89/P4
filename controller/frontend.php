@@ -1,9 +1,14 @@
 <?php
-require_once('model/Manager.php');
+/*
+* Manage views that must be returned to the user, reading the DB
+*/
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
 require_once('model/UserManager.php');
 
+/*
+* Set frontoffice view if conditions are correct
+*/
 function listPosts()
 {
     $postManager = new Gaetan\P4\Model\PostManager();
@@ -21,38 +26,8 @@ function listPosts()
     $action = 'list_posts';
     $isActive = 'home';
 
-    require('view/frontoffice/pagination.php');
+    require('view/pagination.php');
     require('view/frontoffice/listPostsView.php');
-}
-
-function post($postId)
-{
-    $postManager = new Gaetan\P4\Model\PostManager();
-    $commentManager = new Gaetan\P4\Model\CommentManager();
-    if ($postManager->exists($postId)) {
-        $post = $postManager->getPost($postId);
-
-        $commentsCount = $commentManager->count();
-        $commentsByPage = 10;
-        $countPages = ceil($commentsCount / $commentsByPage);
-        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) {
-            $currentPage = intval($_GET['page']);
-        }
-        else {
-            $currentPage = 1;
-        }
-        $start = ($currentPage - 1) * $commentsByPage;
-
-        $comments = $commentManager->getListComments($postId, $start, $commentsByPage);
-        $action = 'post';
-
-        require('view/frontoffice/pagination.php');
-        require('view/frontoffice/postView.php');
-    }
-    else {
-        throw new Exception('Identifiant incorrect.');
-    }
-
 }
 
 function getByType($type)
@@ -73,8 +48,38 @@ function getByType($type)
     $action = 'list_posts';
     $isActive = $type;
 
-    require('view/frontoffice/paginationByType.php');
+    require('view/paginationByType.php');
     require('view/frontoffice/listPostsView.php');
+}
+
+function post($postId)
+{
+    $postManager = new Gaetan\P4\Model\PostManager();
+    $commentManager = new Gaetan\P4\Model\CommentManager();
+    if ($postManager->exists($postId)) {
+        $post = $postManager->getPost($postId);
+
+        $commentsCount = $commentManager->count($postId);
+        $commentsByPage = 10;
+        $countPages = ceil($commentsCount / $commentsByPage);
+        if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) {
+            $currentPage = intval($_GET['page']);
+        }
+        else {
+            $currentPage = 1;
+        }
+        $start = ($currentPage - 1) * $commentsByPage;
+
+        $comments = $commentManager->getListComments($postId, $start, $commentsByPage);
+        $action = 'post&amp;id=' . $postId;
+
+        require('view/pagination.php');
+        require('view/frontoffice/postView.php');
+    }
+    else {
+        throw new Exception('Identifiant incorrect.');
+    }
+
 }
 
 function registration()
@@ -117,7 +122,9 @@ function userProfile($userId)
     }
 }
 
-
+/*
+* Set backoffice view if conditions are verified
+*/
 function newPost()
 {
     $isActive = 'newPost';
@@ -142,9 +149,8 @@ function updateListPosts()
     $action = 'update_list_posts';
     $isTypeActive = 'all';
 
-    require('view/frontoffice/pagination.php');
+    require('view/pagination.php');
     require('view/backoffice/updateListPostsView.php');
-
 }
 
 function getByTypeUpdate($type)
@@ -168,7 +174,7 @@ function getByTypeUpdate($type)
     $isTypeActive = $type;
 
 
-    require('view/frontoffice/paginationByType.php');
+    require('view/paginationByType.php');
     require('view/backoffice/updateListPostsView.php');
 }
 
@@ -189,7 +195,7 @@ function moderation()
 {
     $commentManager = new Gaetan\P4\Model\CommentManager();
     $reportCount = $commentManager->countReport();
-    $reportsByPage = 20;
+    $reportsByPage = 10;
     $countPages = ceil($reportCount / $reportsByPage);
 
     if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) {
@@ -204,7 +210,7 @@ function moderation()
     $action = 'moderation';
     $isActive = 'moderation';
 
-    require('view/frontoffice/pagination.php');
+    require('view/pagination.php');
     require('view/backoffice/moderationView.php');
 }
 
@@ -227,6 +233,6 @@ function usersList()
     $action = 'users_list';
     $isActive = 'users';
 
-    require('view/frontoffice/pagination.php');
+    require('view/pagination.php');
     require('view/backoffice/listUsersView.php');
 }

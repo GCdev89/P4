@@ -6,6 +6,9 @@ require_once('model/Comment.php');
 
 class CommentManager extends Manager
 {
+    /**
+    *@var PDO $_db
+    */
     private $_db;
 
     public function __construct()
@@ -120,9 +123,10 @@ class CommentManager extends Manager
         return (bool) $q->fetchColumn();
     }
 
-    public function count()
+    public function count($postId)
     {
-        $q = $this->_db->query('SELECT COUNT(*) AS count FROM comment');
+        $q = $this->_db->prepare('SELECT COUNT(*) AS count FROM comment WHERE post_id = :post_id');
+        $q->execute(array('post_id' => $postId));
         $data = $q->fetch();
         $q->closeCursor();
         $commentsCount = $data['count'];

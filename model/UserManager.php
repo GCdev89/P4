@@ -6,6 +6,9 @@ require('model/User.php');
 
 class UserManager extends Manager
 {
+    /**
+    *@var PDO $_db
+    */
     private $_db;
 
     public function __construct()
